@@ -481,7 +481,7 @@
 <p>SpringBoot 基于 Spring 开发。SpringBoot 本身并不提供 Spring 框架的核心特性以及扩展功能，也就是说，它并不是用来替代 Spring 的解决方案，而是和 Spring 框架紧密结合用于提升 Spring 开发者体验的工具。</p>
 <p>关于 SpringBoot 有一句很出名的话就是<strong>约定大于配置</strong>。采用 Spring Boot 可以大大的简化开发模式，它集成了大量常用的第三方库配置，所有你想集成的常用框架，它都有对应的组件支持，例如 Redis、MongoDB、Jpa、kafka，Hakira 等等。SpringBoot 应用中这些第三方库几乎可以零配置地开箱即用，大部分的 SpringBoot 应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
 <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>为什么会产生 SpringBoot 呢？</p>
-<p>刚才说springboot简化了基于spring开发，这只是最直观的一方面，事实上 SpringBoot 的诞生有它所处的大时代背景这个原因在里面的，那就是微服务，这也是谈 SpringBoot 必谈微服务的原因。</p>
+<p>刚才说 SpringBoot 简化了基于 Spring 开发，这只是最直观的一方面，事实上 SpringBoot 的诞生有它所处的大时代背景这个原因在里面的，那就是微服务，这也是谈 SpringBoot 必谈微服务的原因。</p>
 <img src = "https://raw.githubusercontent.com/mooba/blogImage/master/martin_fowler.jpg" style="zoom:60%"/>
 
 <p>2014年一个叫 Martin Fowler （同时也是经典著作《重构：改善既有代码的设计》一书的作者）发表了一篇关于<a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">微服务的博客</a>，比较形象生动地介绍了什么是微服务，然后微服务才慢慢被人所熟知。他说微服务其实是一种架构风格，我们在开发一个应用的时候这个应用应该是由一组小型服务组成，每个小型服务都运行在自己的进程内；小服务之间通过HTTP的方式进行互联互通。和微服务相对应的就是我们之前的，单体应用，就是大名鼎鼎的 all in one 的风格。这种风格把所有的东西都写在一个应用里面，比如我们熟悉的OA，CRM，ERP系统，所有的页面，所有的代码都放在一起，打成打成一个war包，然后把war包放在Tomcat容器中运行。</p>
@@ -491,7 +491,7 @@
 <h2 id="怎么样"><a href="#怎么样" class="headerlink" title="怎么样"></a>怎么样</h2><p>介绍了一大堆，那 SpringBoot 的开箱即用是怎么体现的呢。</p>
 <p>SpringBoot 官方推荐的构建应用的方式是使用 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a>，直接在网页上选择好构建工具、语言、SpringBoot 版本，填好自己的项目名和初始依赖，然后点<strong>Generate</strong> 按钮，就能下载一个构建好的工程的zip包，只需要把这个包解压之后导入IDE就可以了。</p>
 <p>这已经是一个包含依赖的、完整的、可独立运行的springboot应用了！你所需要做的就是往里面填充自己的业务代码！</p>
-<p>当然，如果能直接使用IDE来进行上述操作可以让这个过程变得更顺滑。如果你使用的是 IDEA 商业版的话，新建工程的时候直接有 Spring 的选项；如果是IDEA社区版的话，可以安装 <code>Spring Assistant</code> 这个插件可以实现同样的功能。它们的原理都是帮你把连接 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a> 并下载解压这个过程自动化了，所以只需要保持网络畅通就行了。</p>
+<p>当然，如果能直接使用IDE来进行上述操作可以让这个过程变得更顺滑。如果你使用的是 IDEA 商业版的话，新建工程的时候直接有 Spring 的选项；如果是IDEA社区版的话，可以安装 <code>Spring Assistant</code> 这个插件可以实现同样的功能。它们的原理是帮你把连接 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a> 并下载解压这个过程自动化了，所以只需要保持网络畅通就行了。</p>
 <table>
 <thead>
 <tr>
