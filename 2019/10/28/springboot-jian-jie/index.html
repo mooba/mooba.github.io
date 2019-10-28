@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="SpringBoot 简介, 木白的菜园">
-    <meta name="description" content="认识一个东西我们先来试着回答三个经典的问题问题，那就是是什么？为什么？怎么样？
-是什么在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java ">
+    <meta name="description" content="认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？
+是什么在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -473,7 +473,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>认识一个东西我们先来试着回答三个经典的问题问题，那就是是什么？为什么？怎么样？</p>
+                <p>认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？</p>
 <h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的事实标准。所谓事实标准就是虽然 Java 官方没有说它就是开发标准，但是在当前 Java 开发的众多项目中，当我们谈到产品级的 Java 项目的时候，大多都是基于 Spring 或者应用了 Spring 特性的。</p>
 <p>Spring 基于 IOC 和 AOP 两个特性对 Java 开发本身进行了大大的简化。但是一个大型的项目需要集成很多其他组件，比如一个 WEB 项目，至少要集成 MVC 框架、Tomcat 这种 WEB 容器、日志框架、ORM框架，连接数据库要选择连接池吧……使用 Spring 的话每集成一个组件都要去先写它的配置文件，比较繁琐且容易出错。</p>
 <p>然后就有了SpringBoot。</p>
@@ -482,10 +482,10 @@
 <p>关于 SpringBoot 有一句很出名的话就是<strong>约定大于配置</strong>。采用 Spring Boot 可以大大的简化开发模式，它集成了大量常用的第三方库配置，所有你想集成的常用框架，它都有对应的组件支持，例如 Redis、MongoDB、Jpa、kafka，Hakira 等等。SpringBoot 应用中这些第三方库几乎可以零配置地开箱即用，大部分的 SpringBoot 应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
 <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>为什么会产生 SpringBoot 呢？</p>
 <p>刚才说 SpringBoot 简化了基于 Spring 开发，这只是最直观的一方面，事实上 SpringBoot 的诞生有它所处的大时代背景这个原因在里面的，那就是微服务，这也是谈 SpringBoot 必谈微服务的原因。</p>
-<img src = "https://raw.githubusercontent.com/mooba/blogImage/master/martin_fowler.jpg" style="zoom:60%"/>
+<img src="https://i.loli.net/2019/10/28/Qq9ywef6MlPEkCT.jpg" alt="martin_fowler.jpg" style="zoom:50%;" />
 
 <p>2014年一个叫 Martin Fowler （同时也是经典著作《重构：改善既有代码的设计》一书的作者）发表了一篇关于<a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">微服务的博客</a>，比较形象生动地介绍了什么是微服务，然后微服务才慢慢被人所熟知。他说微服务其实是一种架构风格，我们在开发一个应用的时候这个应用应该是由一组小型服务组成，每个小型服务都运行在自己的进程内；小服务之间通过HTTP的方式进行互联互通。和微服务相对应的就是我们之前的，单体应用，就是大名鼎鼎的 all in one 的风格。这种风格把所有的东西都写在一个应用里面，比如我们熟悉的OA，CRM，ERP系统，所有的页面，所有的代码都放在一起，打成打成一个war包，然后把war包放在Tomcat容器中运行。</p>
-<p><img src="https://raw.githubusercontent.com/mooba/blogImage/master/microservice.png" alt="单体应用为微服务对比"></p>
+<p><img src="https://i.loli.net/2019/10/28/DXS84IniF7YrKBW.png" alt="microservice.png"></p>
 <p>这种传统web开发的架构模式当然也有它的优势，比如它测试部署比较简单，因为不涉及到多个服务的互联互调，只需要把一个包上传到服务器就行了，可以说是一人吃饱全家不饿。同样也不会给运维带来麻烦，方便水平扩展，只需要又把相同的应用复制多份放在不同的服务器中就达到了扩展的目的。</p>
 <p>单体应用的的缺点也显而易见，容易牵一发而动全身，比如要更改一个小小的功能，就可能需要重新部署整个应用。当然，更大的挑战就是日益增长的用户需求。</p>
 <h2 id="怎么样"><a href="#怎么样" class="headerlink" title="怎么样"></a>怎么样</h2><p>介绍了一大堆，那 SpringBoot 的开箱即用是怎么体现的呢。</p>
@@ -507,9 +507,8 @@
 <p>那如果要用原生的springMVC来实现这个事情就复杂了，可以看看右边我大概罗列的这些步骤，当时学的时候让我我非常头疼。要单独安装Tomcat，安装的过程中要注意版本和当前的spring版本是否兼容，手动引入spring各个模块的依赖。pom.xml就不说了，maven工程都要用到，然后还有web.xml-用来配置servlet、拦截规则、字符编码器等等，applicationContext.xml，springmvc.xml 等一大堆xml文件……</p>
 <p>这个过程对初学者非常不友好，记忆这些步骤和配置文件能让人崩溃，xml这种表达方式又不是很直观。这些东西称为脚手架，在小公司里面会搭建这些东西就可以算半个师傅了，小弟们就可以在搭好的架子里面写业务代码了。</p>
 <p>再聊回微服务，试想一下，如果我们要跟上时代的步伐，使用微服务去开发软件，每个功能模块都部署成一个单独的服务，这个时候我们再使用纯粹的 Spring 去开发，每开发一个服务都需要重复的搭建项目骨架，然后编写各种配置文件，几十几百个服务加起来，这部分工作量是很大的，这还不算业务代码的开发时间。这种时候就是 SpringBoot 发挥它开箱即用的特质的时候了。然后多个微服务之间再通过 Spring 全家桶里面的 SpringCloud 进行管理，比如服务注册、服务发现等等。所以我们现在说 SpringBoot 是 Java 企业级开发的一站式解决方案。</p>
-<img src = "https://github.com/mooba/blogImage/blob/master/springboot_introduction/sunwukong.png"/>
-
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>软件工程是一个不断抽象，不断把复杂的东西简化的这样一套理论和工具，不是是说使用起来越复杂就可以彰显我的高端和牛逼，有时候反而是做多错多。所以SpringBoot告诉我们这些工作都没必要，框架来做就行了，你们可以专注于代码逻辑。</p>
+<p><img src="https://i.loli.net/2019/10/28/NDhQZmzAxLRMyjp.jpg" alt="整个世界清静了"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>软件工程是一个不断抽象，不断把复杂的东西简化的这样一套理论和工具，不是说使用起来越复杂就可以彰显我的高端和牛逼，有时候反而是做多错多。所以SpringBoot告诉我们这些工作都没必要，框架来做就行了，你们可以专注于代码逻辑。</p>
 <p>SpringBoot 具有如下优点：</p>
 <ul>
 <li><p>快速创建独立运行的Spring项目以及与主流框架集成、</p>
@@ -806,8 +805,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            认识一个东西我们先来试着回答三个经典的问题问题，那就是是什么？为什么？怎么样？
-是什么在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 
+                            认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？
                         
                     </div>
                     <div class="publish-info">
