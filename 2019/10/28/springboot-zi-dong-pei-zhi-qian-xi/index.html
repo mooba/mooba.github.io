@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot 简介, 木白的菜园">
-    <meta name="description" content="认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？
-是什么在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的">
+    <meta name="keywords" content="SpringBoot 自动配置浅析, 木白的菜园">
+    <meta name="description" content="Introduction我们知道，SpringBoot之所以强大，就是因为他提供了各种默认的配置，可以让我们在集成各个组件的时候从各种各样的配置文件中解放出来。
+拿一个最普通的 web 项目举例。我们需要使用 servlet 容器，Spri">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SpringBoot 简介 | 木白的菜园</title>
+    <title>SpringBoot 自动配置浅析 | 木白的菜园</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -305,13 +305,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        SpringBoot 简介
+                        SpringBoot 自动配置浅析
                     </div>
                 </div>
             </div>
@@ -459,6 +459,11 @@
                 </div>
                 
                 
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2019-11-17
+                </div>
+                
 
                 
 				
@@ -473,60 +478,64 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？</p>
-<h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的事实标准。所谓事实标准就是虽然 Java 官方没有说它就是开发标准，但是在当前 Java 开发的众多项目中，当我们谈到产品级的 Java 项目的时候，大多都是基于 Spring 或者应用了 Spring 特性的。</p>
-<p>Spring 基于 IOC 和 AOP 两个特性对 Java 开发本身进行了大大的简化。但是一个大型的项目需要集成很多其他组件，比如一个 WEB 项目，至少要集成 MVC 框架、Tomcat 这种 WEB 容器、日志框架、ORM框架，连接数据库要选择连接池吧……使用 Spring 的话每集成一个组件都要去先写它的配置文件，比较繁琐且容易出错。</p>
-<p>然后就有了SpringBoot。</p>
-<p>Spring Boot 是由 Pivotal 团队提供的全新框架，2014 年 4 月发布 Spring Boot 1.0 2018 年 3 月 Spring Boot 2.0发布。它是对spring的进一步封装，其设计目的是用来简化 Spring 应用的初始搭建以及开发过程。怎么简化的呢？就是通过封装、抽象、提供默认配置等方式让我们更容易使用。</p>
-<p>SpringBoot 基于 Spring 开发。SpringBoot 本身并不提供 Spring 框架的核心特性以及扩展功能，也就是说，它并不是用来替代 Spring 的解决方案，而是和 Spring 框架紧密结合用于提升 Spring 开发者体验的工具。</p>
-<p>关于 SpringBoot 有一句很出名的话就是<strong>约定大于配置</strong>。采用 Spring Boot 可以大大的简化开发模式，它集成了大量常用的第三方库配置，所有你想集成的常用框架，它都有对应的组件支持，例如 Redis、MongoDB、Jpa、kafka，Hakira 等等。SpringBoot 应用中这些第三方库几乎可以零配置地开箱即用，大部分的 SpringBoot 应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
-<h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>为什么会产生 SpringBoot 呢？</p>
-<p>刚才说 SpringBoot 简化了基于 Spring 开发，这只是最直观的一方面，事实上 SpringBoot 的诞生有它所处的大时代背景这个原因在里面的，那就是微服务，这也是谈 SpringBoot 必谈微服务的原因。</p>
-<img src="https://i.loli.net/2019/10/28/Qq9ywef6MlPEkCT.jpg" alt="martin_fowler.jpg" style="zoom:50%;" />
+                <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>我们知道，SpringBoot之所以强大，就是因为他提供了各种默认的配置，可以让我们在集成各个组件的时候从各种各样的配置文件中解放出来。</p>
+<p>拿一个最普通的 web 项目举例。我们需要使用 servlet 容器，SpringBoot 就提供了嵌入式的 Tomcat 作为默认容器，不需要一行配置就能直接以最普通的 Java 程序的方式启动：<code>java -jar</code>；接收请求需要一个网络端口，默认配置好<code>8080</code>；处理请求需要 servlet 的多线程特性，默认配置好了最大线程数为<code>200</code>；处理好的请求以<code>Restful</code> 风格返回给调用方，SpringBoot 默认配置好了<code>jackson</code>进行 json 序列化，业务代码需要做的只是返回一个 POJO 对象；连接池直接就默认配置了性能最好的的 <code>Hikari</code>，以及连接池的默认尺寸为10……在一个简单的web应用中，这些配置我们甚至都可能不了解或者没有意识到它们的存在，就可以让程序正常运行。</p>
+<p>这就是自动配置的魔力——润物细无声。</p>
+<p>那么自动配置是怎么实现的呢？本文就从<code>POM</code>文件和 <code>@SpringBootApplication</code> 注解来简单分析一下自动配置原理。</p>
+<p>真的只是<strong>简单地</strong>，分析一下。</p>
+<h2 id="POM文件"><a href="#POM文件" class="headerlink" title="POM文件"></a>POM文件</h2><h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><ul>
+<li>SpringBoot 2.0.6</li>
+</ul>
+<h3 id="父项目"><a href="#父项目" class="headerlink" title="父项目"></a>父项目</h3><p>在每一个 SpringBoot 项目一开始的 POM 文件中，就有一个<strong>父依赖</strong>：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>parent</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-parent<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.0.6.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>relativePath</span><span class="token punctuation">/></span></span> <span class="token comment" spellcheck="true">&lt;!-- lookup parent from repository --></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>parent</span><span class="token punctuation">></span></span></code></pre>
+<p>点进<code>artifactId</code>之后来到 <code>spring-boot-starter-parent-2.0.6.RELEASE.pom</code> 文件，这个文件还有一个父依赖：</p>
+<pre class=" language-xml"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>parent</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-dependencies<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>2.0.6.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>relativePath</span><span class="token punctuation">></span></span>../../spring-boot-dependencies<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>relativePath</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>parent</span><span class="token punctuation">></span></span></code></pre>
+<p>再继续点进去来到 <code>spring-boot-dependencies-2.0.6.RELEASE.pom</code> 文件中。在该文件的 <code>&lt;properties&gt;</code> 标签中可以看到各种各样的组件的版本信息， <code>&lt;dependencyManagement&gt;</code> 标签中声明了各个组件的maven坐标信息。其中，我数了一下，在 <code>SpringBoot 2.0.6</code> 中一个有177个带有版本信息的组件名，包括了大家熟悉的 elasticsearch、activemq、redis、kafka等等。</p>
+<p>这里（<code>spring-boot-dependencies-2.0.6.RELEASE.pom</code>文件）称为 SpringBoot 的“<strong>版本仲裁中心</strong>”，它是用来管理 SpringBoot 应用里面的所有依赖版本的地方。 它包含了大部分开发中会用到的一些组件的版本，所以我们导入依赖默认是不需要写版本号的，SpringBoot 会自动帮我们配置需要的版本。这样在引入某个组件的时候不用考虑这个组件和系统中已有的组件兼不兼容之类的问题，避免了烦人的版本冲突问题。（当然，没有在 dependencies里面管理的依赖自然需要声明版本号)  </p>
+<h3 id="启动器（Starters）"><a href="#启动器（Starters）" class="headerlink" title="启动器（Starters）"></a>启动器（Starters）</h3><p>父项目做版本仲裁，那么真正的 jar 包是从哪里导入进来的呢？这就要说到我们的starters了。点开web-starter可以看到它帮我们导入了web模块正常运行所依赖的组件，就不用我们一个一个手动导入了。</p>
+<p>所以，所谓的Starters就是一系列依赖描述的组合，我们可以通过导入这些starters就会有相应的依赖了并可以基于他们进行相应的开发</p>
+<p>Springboot把开发中中会遇到的场景都抽象成一个个的starter，比如（），只需要在项目里面引入这些starter 相关场景的所有依赖都会导入进来。要用什么功能就导入什么场景的启动器</p>
+<h2 id="SpringBootApplication"><a href="#SpringBootApplication" class="headerlink" title="@SpringBootApplication"></a>@SpringBootApplication</h2><p>一个典型的 springboot 项目的入口类如下所示：</p>
+<pre class=" language-java"><code class="language-java"><span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DemoApplication</span> <span class="token punctuation">{</span>
 
-<p>2014年一个叫 Martin Fowler （同时也是经典著作《重构：改善既有代码的设计》一书的作者）发表了一篇关于<a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">微服务的博客</a>，比较形象生动地介绍了什么是微服务，然后微服务才慢慢被人所熟知。他说微服务其实是一种架构风格，我们在开发一个应用的时候这个应用应该是由一组小型服务组成，每个小型服务都运行在自己的进程内；小服务之间通过HTTP的方式进行互联互通。和微服务相对应的就是我们之前的，单体应用，就是大名鼎鼎的 all in one 的风格。这种风格把所有的东西都写在一个应用里面，比如我们熟悉的OA，CRM，ERP系统，所有的页面，所有的代码都放在一起，打成打成一个war包，然后把war包放在Tomcat容器中运行。</p>
-<p><img src="https://i.loli.net/2019/10/28/DXS84IniF7YrKBW.png" alt="microservice.png"></p>
-<p>这种传统web开发的架构模式当然也有它的优势，比如它测试部署比较简单，因为不涉及到多个服务的互联互调，只需要把一个包上传到服务器就行了，可以说是一人吃饱全家不饿。同样也不会给运维带来麻烦，方便水平扩展，只需要又把相同的应用复制多份放在不同的服务器中就达到了扩展的目的。</p>
-<p>单体应用的的缺点也显而易见，容易牵一发而动全身，比如要更改一个小小的功能，就可能需要重新部署整个应用。当然，更大的挑战就是日益增长的用户需求。</p>
-<h2 id="怎么样"><a href="#怎么样" class="headerlink" title="怎么样"></a>怎么样</h2><p>介绍了一大堆，那 SpringBoot 的开箱即用是怎么体现的呢。</p>
-<p>SpringBoot 官方推荐的构建应用的方式是使用 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a>，直接在网页上选择好构建工具、语言、SpringBoot 版本，填好自己的项目名和初始依赖，然后点<strong>Generate</strong> 按钮，就能下载一个构建好的工程的zip包，只需要把这个包解压之后导入IDE就可以了。</p>
-<p>这已经是一个包含依赖的、完整的、可独立运行的springboot应用了！你所需要做的就是往里面填充自己的业务代码！</p>
-<p>当然，如果能直接使用IDE来进行上述操作可以让这个过程变得更顺滑。如果你使用的是 IDEA 商业版的话，新建工程的时候直接有 Spring 的选项；如果是IDEA社区版的话，可以安装 <code>Spring Assistant</code> 这个插件可以实现同样的功能。它们的原理是帮你把连接 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a> 并下载解压这个过程自动化了，所以只需要保持网络畅通就行了。</p>
-<table>
-<thead>
-<tr>
-<th align="center">SpringBoot</th>
-<th align="center">Spring + Spring MVC</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a></td>
-<td align="center">1. 安装Tomcat<br>2. 引入spring必要依赖<br>  spring-webmvc<br>spring-context<br>spring-beans<br>spring-aspects<br>…<br>3. 引入必要的第三方依赖，jdbc,test,log这些依赖依然要注意版本兼容问题<br>4. 新建webapp/WEB-INFO/web.xml<br>5. applicationContext.xml<br>6. Springmvc.xml<br>…</td>
-</tr>
-</tbody></table>
-<p>那如果要用原生的springMVC来实现这个事情就复杂了，可以看看右边我大概罗列的这些步骤，当时学的时候让我我非常头疼。要单独安装Tomcat，安装的过程中要注意版本和当前的spring版本是否兼容，手动引入spring各个模块的依赖。pom.xml就不说了，maven工程都要用到，然后还有web.xml-用来配置servlet、拦截规则、字符编码器等等，applicationContext.xml，springmvc.xml 等一大堆xml文件……</p>
-<p>这个过程对初学者非常不友好，记忆这些步骤和配置文件能让人崩溃，xml这种表达方式又不是很直观。这些东西称为脚手架，在小公司里面会搭建这些东西就可以算半个师傅了，小弟们就可以在搭好的架子里面写业务代码了。</p>
-<p>再聊回微服务，试想一下，如果我们要跟上时代的步伐，使用微服务去开发软件，每个功能模块都部署成一个单独的服务，这个时候我们再使用纯粹的 Spring 去开发，每开发一个服务都需要重复的搭建项目骨架，然后编写各种配置文件，几十几百个服务加起来，这部分工作量是很大的，这还不算业务代码的开发时间。这种时候就是 SpringBoot 发挥它开箱即用的特质的时候了。然后多个微服务之间再通过 Spring 全家桶里面的 SpringCloud 进行管理，比如服务注册、服务发现等等。所以我们现在说 SpringBoot 是 Java 企业级开发的一站式解决方案。</p>
-<p><img src="https://i.loli.net/2019/10/28/NDhQZmzAxLRMyjp.jpg" alt="整个世界清静了"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>软件工程是一个不断抽象，不断把复杂的东西简化的这样一套理论和工具，不是说使用起来越复杂就可以彰显我的高端和牛逼，有时候反而是做多错多。所以SpringBoot告诉我们这些工作都没必要，框架来做就行了，你们可以专注于代码逻辑。</p>
-<p>SpringBoot 具有如下优点：</p>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        SpringApplication<span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span>DemoApplication<span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>只要运行<code>main</code>方法就能启动该应用。<code>main</code> 中运行 run 方法时需要传入一个类，这个类正是使用<code>@SpringBootApplication</code>注解标注的类，如果没有这个注解程序是跑不起来的。</p>
+<p>这个注解标注在某个类上就说明这个类是 springboot 的主配置类，springboot 就应该运行这个类的 main 方法来启动springboot应用</p>
+<p>点开这个注解的源码，可以看到这是一个组合注解，最主要的是这两个注解：</p>
 <ul>
-<li><p>快速创建独立运行的Spring项目以及与主流框架集成、</p>
+<li><p><code>@SpringBootConfiguration</code></p>
 </li>
-<li><p>使用嵌入式的Servlet容器，应用无需打成WAR包</p>
-</li>
-<li><p>Starters自动依赖与版本控制</p>
-</li>
-<li><p>大量的自动配置，简化开发，也可修改默认值</p>
-</li>
-<li><p>无需配置XML，无代码生成，开箱即用</p>
-</li>
-<li><p>准生产环境的运行时应用监控</p>
-</li>
-<li><p>与云计算的天然集成</p>
+<li><p><code>@EnableAutoConfiguration</code> </p>
 </li>
 </ul>
-<p>这些优点这篇文章中有的涉及到了，有的还没介绍。我会在之后的文章中陆续把这些话题展开。那么现在，你要做的就是，赶紧把 SpringBoot 用起来吧！</p>
+<p><code>@SpringBootConfiguration</code>标注在某个类上，表示这是一个 SpringBoot 的配置类，它的底层是<code>@Configuration</code>，属于spring的底层注解，标注了这个注解的类表名这个类是一个配置类，取代以前开发中的xml文件配置，同时也表明这个类是 spring 容器中的组件，受容器管理。</p>
+<p>接下来是<code>@EnableAutoConfiguration</code>注解，它的用处是<strong>开启自动配置</strong>，使用 spring 开发需要手动配置的东西，现在由 springboot 帮我们配置了，具体的实现就是通过这个注解来实现的。该组合注解有两个。</p>
+<h3 id="1-AutoConfigurationPackage"><a href="#1-AutoConfigurationPackage" class="headerlink" title="1. @AutoConfigurationPackage"></a>1. @AutoConfigurationPackage</h3><p>它的 注解中的核心代码是 <code>@Import({Registrar.class})</code>。</p>
+<p> <code>@Import</code> 的作用就是为容器中导入一个它指定的组件。</p>
+<p>在 <code>Registrar</code> 这个类中有一个方法叫<code>registerBeanDefinitions</code>，用于注册一些 bean 定义信息：</p>
+<pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">registerBeanDefinitions</span><span class="token punctuation">(</span>AnnotationMetadata metadata<span class="token punctuation">,</span> BeanDefinitionRegistry registry<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+     AutoConfigurationPackages<span class="token punctuation">.</span><span class="token function">register</span><span class="token punctuation">(</span>registry<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AutoConfigurationPackages<span class="token punctuation">.</span>PackageImport</span><span class="token punctuation">(</span>metadata<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPackageName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>打个断点在这一行代码上，运行</p>
+<pre class=" language-java"><code class="language-java"><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">AutoConfigurationPackages<span class="token punctuation">.</span>PackageImport</span><span class="token punctuation">(</span>metadata<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getPackageName</span><span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<p>得到的结果是<strong>主配置类所在的包名</strong>，目的就是将主配置类所在包及<strong>下面所有子包里面的所有组件扫描到Spring容器中</strong>。同时也说明了，如果在主配置所在包的上层包添加组件的话是不会被扫描到的、不起作用的。</p>
+<h3 id="2-Import-AutoConfigurationImportSelector-class"><a href="#2-Import-AutoConfigurationImportSelector-class" class="headerlink" title="2. @Import({AutoConfigurationImportSelector.class})"></a>2. @Import({AutoConfigurationImportSelector.class})</h3><p>该注解导入了一个自动配置的<strong>选择器</strong>，真正地给容器中导入 springboot 自动帮我们配置好的配置类。在 <code>AutoConfigurationImportSelector</code> 这个选择器中的 <code>getAutoConfigurationEntry</code> 方法中，以<strong>全限定类名</strong>的方式把所有需要的配置类导入 springboot 容器中。这些全限定类型所在文件路径为：</p>
+<pre><code>org/springframework/boot/spring-boot-autoconfigure/2.1.8.RELEASE/spring-boot-autoconfigure-2.1.8.RELEASE.jar!/META-INF/spring.factories</code></pre><p>上述两个注解一个负责扫描我们<strong>将要加容器中的类</strong>，一个加入 <strong>springboot 为我们自动配置好的类</strong>，springboot 通过这两种方式省略了我们大量的配置工作。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文从用于maven项目管理的<code>pom.xml</code>文件和标注在启动类上的<code>@SpringBootApplication</code>注解，简单分析了springboot 自动配置的实现。前者通过<strong>版本仲裁中心</strong>为我们维护项目组件的版本，防止依赖冲突；后者通过在加载程序的时候导入数以百计的自动配置类实现自动配置。</p>
 
             </div>
             <hr/>
@@ -552,7 +561,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://pengcheng.site/2019/10/28/springboot-jian-jie/">https://pengcheng.site/2019/10/28/springboot-jian-jie/</a>
+                    <a href="https://pengcheng.site/2019/10/28/springboot-zi-dong-pei-zhi-qian-xi/">https://pengcheng.site/2019/10/28/springboot-zi-dong-pei-zhi-qian-xi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -767,7 +776,7 @@
         repo: 'blogtalk',
         owner: 'mooba',
         admin: ["mooba"],
-        id: '2019-10-28T11-23-43',
+        id: '2019-10-28T21-48-14',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -792,24 +801,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/10/28/springboot-zi-dong-pei-zhi-qian-xi/">
+                <a href="/2019/11/17/log4j-he-log4j2-zai-springboot-zhong-de-xing-neng-dui-bi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="SpringBoot 自动配置浅析">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="log4j和log4j2在springboot中的性能对比">
                         
-                        <span class="card-title">SpringBoot 自动配置浅析</span>
+                        <span class="card-title">log4j和log4j2在springboot中的性能对比</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主要从依赖仲裁中心和@SpringBootApplication注解来简单分析一下自动配置原理
+                            log4j和log4j2对于接口性能的对比
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-28
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-11-17
                         </span>
                         <span class="publish-author">
                             
@@ -838,6 +847,10 @@
                         <span class="chip bg-color">java</span>
                     </a>
                     
+                    <a href="/tags/log4j2/">
+                        <span class="chip bg-color">log4j2</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -849,31 +862,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/25/che-zhan/">
+                <a href="/2019/10/28/springboot-jian-jie/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="车站">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="SpringBoot 简介">
                         
-                        <span class="card-title">车站</span>
+                        <span class="card-title">SpringBoot 简介</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            夜晚的车站，陌生的人，疲惫的身体，归家的心
+                            认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-28
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    随笔
+                            <a href="/categories/springboot/" class="post-category">
+                                    springboot
                                 </a>
                             
                             
@@ -883,8 +896,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">随笔</span>
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
+                    </a>
+                    
+                    <a href="/tags/spring/">
+                        <span class="chip bg-color">spring</span>
+                    </a>
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>

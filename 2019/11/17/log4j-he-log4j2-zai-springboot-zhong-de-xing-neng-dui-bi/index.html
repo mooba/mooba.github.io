@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot 简介, 木白的菜园">
-    <meta name="description" content="认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？
-是什么在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的">
+    <meta name="keywords" content="log4j和log4j2在springboot中的性能对比, 木白的菜园">
+    <meta name="description" content="
+前言在 java 项目中最常用的三大日志框架是logback，log4j，log4j2。其中logback是 springboot 的默认框架。由于历史原因，我手上有个springboot项目的日志框架是用的log4j。在对某个接口进行压">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SpringBoot 简介 | 木白的菜园</title>
+    <title>log4j和log4j2在springboot中的性能对比 | 木白的菜园</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -305,13 +305,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        SpringBoot 简介
+                        log4j和log4j2在springboot中的性能对比
                     </div>
                 </div>
             </div>
@@ -435,6 +435,10 @@
                                 <span class="chip bg-color">java</span>
                             </a>
                         
+                            <a href="/tags/log4j2/">
+                                <span class="chip bg-color">log4j2</span>
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -455,7 +459,7 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-28
+                    2019-11-17
                 </div>
                 
                 
@@ -473,60 +477,219 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？</p>
-<h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的事实标准。所谓事实标准就是虽然 Java 官方没有说它就是开发标准，但是在当前 Java 开发的众多项目中，当我们谈到产品级的 Java 项目的时候，大多都是基于 Spring 或者应用了 Spring 特性的。</p>
-<p>Spring 基于 IOC 和 AOP 两个特性对 Java 开发本身进行了大大的简化。但是一个大型的项目需要集成很多其他组件，比如一个 WEB 项目，至少要集成 MVC 框架、Tomcat 这种 WEB 容器、日志框架、ORM框架，连接数据库要选择连接池吧……使用 Spring 的话每集成一个组件都要去先写它的配置文件，比较繁琐且容易出错。</p>
-<p>然后就有了SpringBoot。</p>
-<p>Spring Boot 是由 Pivotal 团队提供的全新框架，2014 年 4 月发布 Spring Boot 1.0 2018 年 3 月 Spring Boot 2.0发布。它是对spring的进一步封装，其设计目的是用来简化 Spring 应用的初始搭建以及开发过程。怎么简化的呢？就是通过封装、抽象、提供默认配置等方式让我们更容易使用。</p>
-<p>SpringBoot 基于 Spring 开发。SpringBoot 本身并不提供 Spring 框架的核心特性以及扩展功能，也就是说，它并不是用来替代 Spring 的解决方案，而是和 Spring 框架紧密结合用于提升 Spring 开发者体验的工具。</p>
-<p>关于 SpringBoot 有一句很出名的话就是<strong>约定大于配置</strong>。采用 Spring Boot 可以大大的简化开发模式，它集成了大量常用的第三方库配置，所有你想集成的常用框架，它都有对应的组件支持，例如 Redis、MongoDB、Jpa、kafka，Hakira 等等。SpringBoot 应用中这些第三方库几乎可以零配置地开箱即用，大部分的 SpringBoot 应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
-<h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>为什么会产生 SpringBoot 呢？</p>
-<p>刚才说 SpringBoot 简化了基于 Spring 开发，这只是最直观的一方面，事实上 SpringBoot 的诞生有它所处的大时代背景这个原因在里面的，那就是微服务，这也是谈 SpringBoot 必谈微服务的原因。</p>
-<img src="https://i.loli.net/2019/10/28/Qq9ywef6MlPEkCT.jpg" alt="martin_fowler.jpg" style="zoom:50%;" />
+                <hr>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在 java 项目中最常用的三大日志框架是<code>logback</code>，<code>log4j</code>，<code>log4j2</code>。其中<code>logback</code>是 springboot 的默认框架。由于历史原因，我手上有个springboot项目的日志框架是用的<code>log4j</code>。在对某个接口进行压测和性能优化的时候发现，打印同步日志会导致接口的性能缩水，所以当时直接把性能要求高的接口的日志关闭掉了。随着系统的逐渐复杂，重要性越来越高，定位问题的难度越来越大，我逐渐感觉到日志的的重要性。所以优化日志势在必行。<br>我是从两个方面来考虑<strong>优化日志</strong>这个问题的。</p>
+<ol>
+<li>更换性能更高的日志框架；</li>
+<li>使用异步日志或者延时刷盘的日志配置。</li>
+</ol>
+<p>对第一个问题，很容易就可以Google到，目前性能表现最好的日志框架是<code>log4j2</code>，所以直接把日志框架替换成<code>log4j2</code>就可以了。</p>
+<p>对于第二个问题，因为当前日志是同步的，需要把“打印日志”这个操作完成之后才会运行接下来的业务代码，而“打印日志”通常是要输出到控制台或者文件中的，IO开销很大，如果把这个过程变成异步的应该能从一定程度上提高性能表现。</p>
+<p>不知道在哪听到的两句话，想在这里分享一下：</p>
+<ol>
+<li>没有日志的系统就像在裸奔</li>
+<li>没有uid的日志是没有灵魂的</li>
+</ol>
+<p>PS：这里没有uid的本来是指是调用方的id，更一般的说法就是不能定位问题的日志是没有存在价值的。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><ul>
+<li>springboot 2.1.5</li>
+<li>java 8</li>
+<li>MacBook Pro 2017</li>
+</ul>
+<h2 id="log4j日志"><a href="#log4j日志" class="headerlink" title="log4j日志"></a>log4j日志</h2><h3 id="log4j-在-springboot-中的配置"><a href="#log4j-在-springboot-中的配置" class="headerlink" title="log4j 在 springboot 中的配置"></a>log4j 在 springboot 中的配置</h3><p>在 springboot 中使用 log4j 需要引入其依赖并把 springboot 自带的日志框架 logback 排除掉:</p>
+<pre class=" language-xml"><code class="language-xml">        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-log4j<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>1.3.8.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+              <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exclusions</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>exclusion</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-logging<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclusion</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>exclusions</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+</code></pre>
+<p>然后编写配置文件<code>log4j.properties</code>:</p>
+<pre class=" language-properties"><code class="language-properties"><span class="token attr-name">log4j.rootLogger</span><span class="token punctuation">=</span><span class="token attr-value">INFO,stdout,file</span>
+<span class="token attr-name">log4j.appender.stdout</span><span class="token punctuation">=</span><span class="token attr-value">org.apache.log4j.ConsoleAppender</span>
+<span class="token attr-name">log4j.appender.stdout.layout</span><span class="token punctuation">=</span><span class="token attr-value">org.apache.log4j.PatternLayout</span>
+<span class="token attr-name">log4j.appender.stdout.layout.ConversionPattern</span><span class="token punctuation">=</span><span class="token attr-value">%d{yyyy-MM-dd HH:mm:ss} [%p] %c:[%L] %m%n</span>
+<span class="token attr-name">log4j.appender.file</span><span class="token punctuation">=</span><span class="token attr-value">org.apache.log4j.DailyRollingFileAppender</span>
+<span class="token attr-name">log4j.appender.file.File</span><span class="token punctuation">=</span><span class="token attr-value">logs/seller_penalty_api_server.log</span>
+<span class="token attr-name">log4j.appender.file.Append</span><span class="token punctuation">=</span><span class="token attr-value">true</span>
+<span class="token attr-name">log4j.appender.file.layout</span><span class="token punctuation">=</span><span class="token attr-value">org.apache.log4j.PatternLayout</span>
+<span class="token attr-name">log4j.appender.file.layout.ConversionPattern</span><span class="token punctuation">=</span><span class="token attr-value">%d{yyyy-MM-dd HH:mm:ss} [%p] %c:[%L] %m%n</span></code></pre>
+<h3 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h3><p>知己知彼，百战不殆。</p>
+<p>要对比性能，首先就要知道原来的<code>log4j</code>框架的性能表现如何。</p>
+<p>这里我使用了一种简单的方式来进行对比。在 springboot 中实现两个简单的接口，一个打印一行日志，一个不打印日志，然后用<code>wrk</code>工具对接口进行压测，看两个接口能够达到的QPS分别是多少。</p>
+<pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// 不打印日志</span>
+<span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"/ping"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">ping</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">"pang"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-<p>2014年一个叫 Martin Fowler （同时也是经典著作《重构：改善既有代码的设计》一书的作者）发表了一篇关于<a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">微服务的博客</a>，比较形象生动地介绍了什么是微服务，然后微服务才慢慢被人所熟知。他说微服务其实是一种架构风格，我们在开发一个应用的时候这个应用应该是由一组小型服务组成，每个小型服务都运行在自己的进程内；小服务之间通过HTTP的方式进行互联互通。和微服务相对应的就是我们之前的，单体应用，就是大名鼎鼎的 all in one 的风格。这种风格把所有的东西都写在一个应用里面，比如我们熟悉的OA，CRM，ERP系统，所有的页面，所有的代码都放在一起，打成打成一个war包，然后把war包放在Tomcat容器中运行。</p>
-<p><img src="https://i.loli.net/2019/10/28/DXS84IniF7YrKBW.png" alt="microservice.png"></p>
-<p>这种传统web开发的架构模式当然也有它的优势，比如它测试部署比较简单，因为不涉及到多个服务的互联互调，只需要把一个包上传到服务器就行了，可以说是一人吃饱全家不饿。同样也不会给运维带来麻烦，方便水平扩展，只需要又把相同的应用复制多份放在不同的服务器中就达到了扩展的目的。</p>
-<p>单体应用的的缺点也显而易见，容易牵一发而动全身，比如要更改一个小小的功能，就可能需要重新部署整个应用。当然，更大的挑战就是日益增长的用户需求。</p>
-<h2 id="怎么样"><a href="#怎么样" class="headerlink" title="怎么样"></a>怎么样</h2><p>介绍了一大堆，那 SpringBoot 的开箱即用是怎么体现的呢。</p>
-<p>SpringBoot 官方推荐的构建应用的方式是使用 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a>，直接在网页上选择好构建工具、语言、SpringBoot 版本，填好自己的项目名和初始依赖，然后点<strong>Generate</strong> 按钮，就能下载一个构建好的工程的zip包，只需要把这个包解压之后导入IDE就可以了。</p>
-<p>这已经是一个包含依赖的、完整的、可独立运行的springboot应用了！你所需要做的就是往里面填充自己的业务代码！</p>
-<p>当然，如果能直接使用IDE来进行上述操作可以让这个过程变得更顺滑。如果你使用的是 IDEA 商业版的话，新建工程的时候直接有 Spring 的选项；如果是IDEA社区版的话，可以安装 <code>Spring Assistant</code> 这个插件可以实现同样的功能。它们的原理是帮你把连接 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a> 并下载解压这个过程自动化了，所以只需要保持网络畅通就行了。</p>
+<span class="token comment" spellcheck="true">// 打印日志</span>
+<span class="token annotation punctuation">@GetMapping</span><span class="token punctuation">(</span><span class="token string">"pingLog"</span><span class="token punctuation">)</span>
+<span class="token keyword">public</span> String <span class="token function">pingWithLog</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  log<span class="token punctuation">.</span><span class="token function">info</span><span class="token punctuation">(</span><span class="token string">"calling /pingLog"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token string">"pangLog"</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>压测配置如下，分别对两个接口进行多次压测，取三次作为采样结果。</p>
+<pre class=" language-shell"><code class="language-shell">wrk -t10 -c250 -d30s http://localhost:8080/ping</code></pre>
 <table>
 <thead>
 <tr>
-<th align="center">SpringBoot</th>
-<th align="center">Spring + Spring MVC</th>
+<th>采样次数</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a></td>
-<td align="center">1. 安装Tomcat<br>2. 引入spring必要依赖<br>  spring-webmvc<br>spring-context<br>spring-beans<br>spring-aspects<br>…<br>3. 引入必要的第三方依赖，jdbc,test,log这些依赖依然要注意版本兼容问题<br>4. 新建webapp/WEB-INFO/web.xml<br>5. applicationContext.xml<br>6. Springmvc.xml<br>…</td>
+<td>不打印日志</td>
+<td>21937.40</td>
+<td>23570.31</td>
+<td>22950.31</td>
+</tr>
+<tr>
+<td>打印日志</td>
+<td>7825.40</td>
+<td>7848.33</td>
+<td>7788.54</td>
 </tr>
 </tbody></table>
-<p>那如果要用原生的springMVC来实现这个事情就复杂了，可以看看右边我大概罗列的这些步骤，当时学的时候让我我非常头疼。要单独安装Tomcat，安装的过程中要注意版本和当前的spring版本是否兼容，手动引入spring各个模块的依赖。pom.xml就不说了，maven工程都要用到，然后还有web.xml-用来配置servlet、拦截规则、字符编码器等等，applicationContext.xml，springmvc.xml 等一大堆xml文件……</p>
-<p>这个过程对初学者非常不友好，记忆这些步骤和配置文件能让人崩溃，xml这种表达方式又不是很直观。这些东西称为脚手架，在小公司里面会搭建这些东西就可以算半个师傅了，小弟们就可以在搭好的架子里面写业务代码了。</p>
-<p>再聊回微服务，试想一下，如果我们要跟上时代的步伐，使用微服务去开发软件，每个功能模块都部署成一个单独的服务，这个时候我们再使用纯粹的 Spring 去开发，每开发一个服务都需要重复的搭建项目骨架，然后编写各种配置文件，几十几百个服务加起来，这部分工作量是很大的，这还不算业务代码的开发时间。这种时候就是 SpringBoot 发挥它开箱即用的特质的时候了。然后多个微服务之间再通过 Spring 全家桶里面的 SpringCloud 进行管理，比如服务注册、服务发现等等。所以我们现在说 SpringBoot 是 Java 企业级开发的一站式解决方案。</p>
-<p><img src="https://i.loli.net/2019/10/28/NDhQZmzAxLRMyjp.jpg" alt="整个世界清静了"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>软件工程是一个不断抽象，不断把复杂的东西简化的这样一套理论和工具，不是说使用起来越复杂就可以彰显我的高端和牛逼，有时候反而是做多错多。所以SpringBoot告诉我们这些工作都没必要，框架来做就行了，你们可以专注于代码逻辑。</p>
-<p>SpringBoot 具有如下优点：</p>
+<p>可以看到两种情况基本上有将近三倍的差距。我是用nohup后台运行的，如果直接使用<code>java -jar</code>运行，日志输出到文件的同时还会输出到控制台，这种情况QPS将进一步降低，大概在5k+左右。这也正是我们最开始为了接口性能选择关闭日志的原因</p>
+<h2 id="log4j2"><a href="#log4j2" class="headerlink" title="log4j2"></a>log4j2</h2><p>引入log4j2（同log4j一样，要排除 springboot 自带的日志框架）：</p>
+<pre class=" language-xml"><code class="language-xml">       <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>spring-boot-starter-log4j2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span>
+        <span class="token comment" spellcheck="true">&lt;!-- 增加识别yaml格式依赖，加上这个才能辨认到log4j2.yml文件 --></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.fasterxml.jackson.dataformat<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>jackson-dataformat-yaml<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+<p>然后在<code>src/main/resources/</code>路径中编写<code>log4j2</code>的配置文件。默认配置文件名是<code>log4j2</code>，支持xml、properties、json、yaml多种文件格式，这里我选了yml，所以需要额外引入<code>jackson-dataformat-yaml</code>的包。</p>
+<pre class=" language-yml"><code class="language-yml">Configuration:
+  status: debug
+
+  appenders: # 包含控制台和文件两个appender
+    Console:
+      name: LogToConsole
+      PatternLayout:
+        Pattern: "%d{yyyy-MM-dd HH:mm:ss} [%p] %c:[%L] %m%n"
+
+    RollingFile:
+      - name: LogToRollingFile
+        fileName: logs/seller_penalty_api_server.log
+        filePattern: "logs/seller_penalty_api_server.log.%d{yyyy-MM-dd}.gz" # 带有后缀名会自动压缩
+        PatternLayout:
+          pattern: "%d{yyyy-MM-dd HH:mm:ss} [%p] %c:[%L] %m%n"
+        Policies:
+          TimeBasedTriggeringPolicy: # 基于时间的trigger，每天一个文件
+            interval: 1
+
+  Loggers:
+    logger:
+      - name: io.shopee.bigdata.penalty.server
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: LogToConsole
+          - ref: LogToRollingFile
+
+    Root:
+      level: error
+      AppenderRef:
+        ref: LogToConsole</code></pre>
+<p>使用<code>log4j2</code>之后，使用<code>wrk</code>和同样的参数压测（关掉控制台输入），三次测试的QPS分别是：</p>
+<table>
+<thead>
+<tr>
+<th>采样次</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>QPS</td>
+<td>13992.50</td>
+<td>15562.27</td>
+<td>15161.16</td>
+</tr>
+</tbody></table>
+<p>可以看到在这个简单的场景下，性能几乎是log4j的2到3倍之多！所以很明显，首先替换日至框架是一个明智的选择。</p>
+<h3 id="log4j2-异步日志"><a href="#log4j2-异步日志" class="headerlink" title="log4j2 异步日志"></a>log4j2 异步日志</h3><p>到目前为止，上述的测试都是针对同步日志进行的测试。在确定了<code>log4j2</code>作为日志框架之后，我想看一下，使用异步日志能不能进一步提高性能表现。</p>
+<h3 id="AsyncAppender-和-Asynchronous-Loggers"><a href="#AsyncAppender-和-Asynchronous-Loggers" class="headerlink" title="AsyncAppender 和 Asynchronous Loggers"></a>AsyncAppender 和 Asynchronous Loggers</h3><p>在<code>log4j2</code>中异步日志有两种实现<code>AsyncAppender</code> 和 <code>Asynchronous Loggers</code> </p>
+<p>前者是 <code>log4j2</code> 最开始的异步日志实现，它把其他 Appender 作为输入，然后把产生 <code>logEvent</code>输出到默认的容器<code>ArrayBlockingQueue</code>中，然后使用另外一个线程中来输出日志以实现异步。但是官方文档也指出：</p>
+<blockquote>
+<p>在这种多线程应用的实践中需要主要：阻塞队列很容易发生锁争用，测试表明当大量线程并发写日志的时候，性能甚至会变得更糟糕。所以应该考虑使用<strong>无锁的Asyn Loggers</strong>进行优化。</p>
+</blockquote>
+<p>上述的<code>Asyn Loggers</code>是<code>log42</code> 团队后来才加入的异步实现，连官方文档都推荐它了，那还有什么好犹豫的呢。它需要引入一个额外的依赖：</p>
+<pre class=" language-xml"><code class="language-xml"> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">></span></span>com.lmax<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">></span></span>disruptor<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">></span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">></span></span>3.4.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">></span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">></span></span></code></pre>
+<p><code>Disruptor</code> 通过<code>CAS</code>而不是锁实现多生产者、多消费者对<code>RingBuffer</code>的并发访问，实现高吞吐和高性能。</p>
+<p>它们两者的具体区别可以参考<a href="https://www.cnblogs.com/yeyang/p/7944906.html" target="_blank" rel="noopener">参考资料2</a></p>
+<h3 id="全异步和混合异步"><a href="#全异步和混合异步" class="headerlink" title="全异步和混合异步"></a>全异步和混合异步</h3><p>Log4j2的异步日志的使用又可以分为<strong>全异步</strong>和<strong>混合异步</strong>，所谓全异步就是所有的日志都以异步方式输出；混合异步就是只有指定的代码文件用异步方式输出，其他日志使用同步方式输出；前者能够获得更高的性能，也是官方推荐的方式，后者具有更好的灵活性，可以进行针对性配置。</p>
+<p>本文中我们直接使用全异步日志。</p>
+<p>在springboot中开启全异步的方式很简单，只需要在配置文件中加如下配置（yml）：</p>
+<pre class=" language-yml"><code class="language-yml">log4j2:
+  contextSelector: org.apache.logging.log4j.core.async.AsyncLoggerContextSelector</code></pre>
+<p>或者在用<code>java -jar</code> 启动的时候加入系统参数：</p>
+<pre class=" language-shell"><code class="language-shell">-DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector</code></pre>
+<p>应用启动之后按照上述的方法测试接口性能：</p>
+<table>
+<thead>
+<tr>
+<th>采样次</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>QPS</td>
+<td>16238.76</td>
+<td>16006.78</td>
+<td>16322.12</td>
+</tr>
+</tbody></table>
+<p>可以看到把日志从同步改成异步之后，性能有一定提升，但是并没有想象中那么大。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>同步日志和业务逻辑在同一个线程中，当日志输出完毕才能执行接下来的代码，涉及到IO，非常影响性能；</li>
+<li><code>log4j2</code> 在本文的简单场景中性能要远远高于 <code>log4j</code>，这次替换是值得的；</li>
+<li><code>log4j2</code> 异步日志应该使用 <code>Asynchronous Loggers</code> 而不是 <code>AsyncAppender</code> </li>
+<li>本次测试是基于一个很简单的场景，在官方文档中，异步日志的性能要远远超过同步日志的，但是在本次测试中并没有体现出来；日志在 springboot 中的性能可能受多个方面的影响，比如每个调用链中日志的条数、springboot本身的配置，日志的level、硬件环境等。</li>
+<li>项目代码见<a href="https://github.com/mooba/springBoot-study/tree/master/springboot2-logging" target="_blank" rel="noopener">Github</a></li>
+</ol>
+<h2 id="彩蛋1-性能测试需要注意的点"><a href="#彩蛋1-性能测试需要注意的点" class="headerlink" title="彩蛋1-性能测试需要注意的点"></a>彩蛋1-性能测试需要注意的点</h2><p>关于性能测试，在 log4j2 的官方文档中提到的几点我觉得是比较通用的:</p>
 <ul>
-<li><p>快速创建独立运行的Spring项目以及与主流框架集成、</p>
-</li>
-<li><p>使用嵌入式的Servlet容器，应用无需打成WAR包</p>
-</li>
-<li><p>Starters自动依赖与版本控制</p>
-</li>
-<li><p>大量的自动配置，简化开发，也可修改默认值</p>
-</li>
-<li><p>无需配置XML，无代码生成，开箱即用</p>
-</li>
-<li><p>准生产环境的运行时应用监控</p>
-</li>
-<li><p>与云计算的天然集成</p>
-</li>
+<li>获取性能的采样结果之前需要 <em>warm up the JVM</em>；</li>
+<li>重复热身多次，然后等待IO线程赶上并释放缓冲区;</li>
+<li>测试的时候重复多次取平均数。</li>
 </ul>
-<p>这些优点这篇文章中有的涉及到了，有的还没介绍。我会在之后的文章中陆续把这些话题展开。那么现在，你要做的就是，赶紧把 SpringBoot 用起来吧！</p>
+<p>总结一下就是系统刚启动的一段时间的测试数据不能作为参考，需要压测一段时间，取稳定之后的结果。就像运动前的热身一样，不光JVM，各种线程池或连接池都需要一段时间的请求才能启动起来进入正常工作状态。</p>
+<h2 id="彩蛋2-springboot-中多环境日志配置"><a href="#彩蛋2-springboot-中多环境日志配置" class="headerlink" title="彩蛋2-springboot 中多环境日志配置"></a>彩蛋2-springboot 中多环境日志配置</h2><p>在springboot中我们通常针对dev，test，live等多种环境会有多套配置文件，比如<code>application-dev.yml</code>,<code>application-test.yml</code>, <code>application-live.yml</code>。然后可以在启动的时候可以通过在全局配置文件<code>application.yml</code>指定某个配置文件来启用配置：</p>
+<pre class=" language-yml"><code class="language-yml">sping:
+  profiles:
+    active: live</code></pre>
+<p>日志同样有这样的需求，不同环境使用不同的日志配置，比如dev或test环境需要开启的log level为<code>DEBUG</code>，而在live环境中却不需要。这种时候我们只需要写多套日志配置，比如<code>log4j2-dev.yml</code>，<code>log4j2-test.yml</code>，<code>log4j2-live.yml</code>，然后在其对应的配置文件中启用日志配置就可以了：</p>
+<pre class=" language-yml"><code class="language-yml">logging:
+  config: classpath:log4j2-dev.yml</code></pre>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a href="https://www.mkyong.com/spring-boot/spring-boot-log4j-2-example/" target="_blank" rel="noopener">Spring Boot Log4j 2 example</a></li>
+<li><a href="https://www.cnblogs.com/yeyang/p/7944906.html" target="_blank" rel="noopener">Log4j2中的同步日志与异步日志</a></li>
+<li><a href="https://stackoverflow.com/questions/24177601/difference-between-asynclogger-and-asyncappender-in-log4j2" target="_blank" rel="noopener">Difference between Asynclogger and AsyncAppender in Log4j2</a></li>
+<li><a href="https://www.callicoder.com/spring-boot-log4j-2-example/" target="_blank" rel="noopener">https://www.callicoder.com/spring-boot-log4j-2-example/</a></li>
+</ol>
 
             </div>
             <hr/>
@@ -552,7 +715,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://pengcheng.site/2019/10/28/springboot-jian-jie/">https://pengcheng.site/2019/10/28/springboot-jian-jie/</a>
+                    <a href="https://pengcheng.site/2019/11/17/log4j-he-log4j2-zai-springboot-zhong-de-xing-neng-dui-bi/">https://pengcheng.site/2019/11/17/log4j-he-log4j2-zai-springboot-zhong-de-xing-neng-dui-bi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -600,6 +763,10 @@
                             
                                 <a href="/tags/java/">
                                     <span class="chip bg-color">java</span>
+                                </a>
+                            
+                                <a href="/tags/log4j2/">
+                                    <span class="chip bg-color">log4j2</span>
                                 </a>
                             
                         </div>
@@ -767,7 +934,7 @@
         repo: 'blogtalk',
         owner: 'mooba',
         admin: ["mooba"],
-        id: '2019-10-28T11-23-43',
+        id: '2019-11-17T18-31-18',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -788,9 +955,72 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2019/11/17/log4j-he-log4j2-zai-springboot-zhong-de-xing-neng-dui-bi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="log4j和log4j2在springboot中的性能对比">
+                        
+                        <span class="card-title">log4j和log4j2在springboot中的性能对比</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            log4j和log4j2对于接口性能的对比
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-11-17
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/springboot/" class="post-category">
+                                    springboot
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/springboot/">
+                        <span class="chip bg-color">springboot</span>
+                    </a>
+                    
+                    <a href="/tags/spring/">
+                        <span class="chip bg-color">spring</span>
+                    </a>
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                    <a href="/tags/log4j2/">
+                        <span class="chip bg-color">log4j2</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2019/10/28/springboot-zi-dong-pei-zhi-qian-xi/">
                     <div class="card-image">
@@ -808,9 +1038,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-28
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -836,55 +1066,6 @@
                     
                     <a href="/tags/java/">
                         <span class="chip bg-color">java</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2019/10/25/che-zhan/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="车站">
-                        
-                        <span class="card-title">车站</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            夜晚的车站，陌生的人，疲惫的身体，归家的心
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-25
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    随笔
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">随笔</span>
                     </a>
                     
                 </div>
