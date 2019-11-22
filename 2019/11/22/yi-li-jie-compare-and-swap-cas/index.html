@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="[译]理解compare-and-swap（CAS）, 木白的菜园">
-    <meta name="description" content="compare-and-swap (CAS)* 指令是一个不可中断的操作（原子操作），它读取一个内存地址，把读取到的值和一个期望值进行比较，当读取的值和期望值相等的时候，就把该内存地址的值更新为一个新的值，否则就什么也不做。这个过程根据不同">
+    <meta name="description" content="compare-and-swap (CAS) 指令是一个不可中断的操作（原子操作），它读取一个内存地址，把读取到的值和一个期望值进行比较，当读取的值和期望值相等的时候，就把该内存地址的值更新为一个新的值，否则就什么也不做。这个过程根据不同的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -472,7 +472,7 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>compare-and-swap (CAS)* 指令是一个不可中断的操作（原子操作），它读取一个<strong>内存地址</strong>，把<strong>读取到的值</strong>和一个<strong>期望值</strong>进行比较，当读取的值和期望值相等的时候，就把该内存地址的值更新为一个新的值，否则就什么也不做。这个过程根据不同的微处理器指令可能有些许不同（比如，如果 CAS 成功的话返回 true，否则返回 false，而不是下面实例中的做法——返回读取的值）。</p>
+                <p><em>compare-and-swap (CAS)</em> 指令是一个不可中断的操作（原子操作），它读取一个<strong>内存地址</strong>，把<strong>读取到的值</strong>和一个<strong>期望值</strong>进行比较，当读取的值和期望值相等的时候，就把该内存地址的值更新为一个新的值，否则就什么也不做。这个过程根据不同的微处理器指令可能有些许不同（比如，如果 CAS 成功的话返回 true，否则返回 false，而不是下面实例中的做法——返回读取的值）。</p>
 <blockquote>
 <p><strong>微处理器 CAS 指令</strong>：</p>
 <p>现代的微处理器本省提供了某种 CAS 指令。比如说，Intel 微处理器提供了 <code>cmpxchg</code> 指令族，而 PowerPC 微处理器提供了 <code>load-link</code>（e.g., <code>lwarx</code>）和 <code>store-conditional</code>（e.g., <code>stwcx</code>）指令用于相同的目的。</p>
@@ -903,16 +903,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
-                    </a>
-                    
                     <a href="/tags/springboot/">
                         <span class="chip bg-color">springboot</span>
                     </a>
                     
                     <a href="/tags/spring/">
                         <span class="chip bg-color">spring</span>
+                    </a>
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                     <a href="/tags/log4j2/">
