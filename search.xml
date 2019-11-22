@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>[译]理解compare-and-swap（CAS）</title>
+      <link href="/2019/11/22/yi-li-jie-compare-and-swap-cas/"/>
+      <url>/2019/11/22/yi-li-jie-compare-and-swap-cas/</url>
+      
+        <content type="html"><![CDATA[<p>compare-and-swap (CAS)* 指令是一个不可中断的操作（原子操作），它读取一个<strong>内存地址</strong>，把<strong>读取到的值</strong>和一个<strong>期望值</strong>进行比较，当读取的值和期望值相等的时候，就把该内存地址的值更新为一个新的值，否则就什么也不做。这个过程根据不同的微处理器指令可能有些许不同（比如，如果 CAS 成功的话返回 true，否则返回 false，而不是下面实例中的做法——返回读取的值）。</p><blockquote><p><strong>微处理器 CAS 指令</strong>：</p><p>现代的微处理器本省提供了某种 CAS 指令。比如说，Intel 微处理器提供了 <code>cmpxchg</code> 指令族，而 PowerPC 微处理器提供了 <code>load-link</code>（e.g., <code>lwarx</code>）和 <code>store-conditional</code>（e.g., <code>stwcx</code>）指令用于相同的目的。</p></blockquote><p>CAS 使得 <strong>read-modify-write</strong> <strong>操作序列</strong>作为原子操作成为可能。通常我们会按照如下过程使用 CAS：</p><ol><li>从地址X读取值v</li><li>执行一个多步计算得到一个新的值v2</li><li>使用CAS尝试把地址X上的值从v改成v2，当执行这些步骤时X的值未更改，则CAS执行成功。</li></ol><p>为了搞清楚CAS是怎样比<code>synchronization</code>提供更好的性能（和可扩展性），举个例子：有一个计数器，允许你读它的当前值并且对值进行累加。下面的类基于<code>synchronization</code>实现了一个计数器：</p><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// Counter.java</span><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Counter</span> <span class="token punctuation">{</span>   <span class="token keyword">private</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>   <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">int</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">{</span>       <span class="token keyword">return</span> value<span class="token punctuation">;</span>    <span class="token punctuation">}</span>   <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">int</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">{</span>       <span class="token keyword">return</span> <span class="token operator">++</span>value<span class="token punctuation">;</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre><p>monitor lock 的高竞争会导致大量的上下文切换，从而使所有的线程延迟，并导致应用程序无法很好地扩展。</p><p>取而代之的是使用 CAS 的代码实现<code>compare-and-swap</code>操作。下面的类模拟了 CAS ，但是使用的是<code>synchronized</code>而不是实际的硬件指令，用于简化代码:</p><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// EmulatedCAS.java</span><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EmulatedCAS</span><span class="token punctuation">{</span>   <span class="token keyword">private</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>   <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">int</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>   <span class="token punctuation">{</span>       <span class="token keyword">return</span> value<span class="token punctuation">;</span>    <span class="token punctuation">}</span>   <span class="token keyword">public</span> <span class="token keyword">synchronized</span> <span class="token keyword">int</span> <span class="token function">compareAndSwap</span><span class="token punctuation">(</span><span class="token keyword">int</span> expectedValue<span class="token punctuation">,</span> <span class="token keyword">int</span> newValue<span class="token punctuation">)</span>    <span class="token punctuation">{</span>      <span class="token keyword">int</span> readValue <span class="token operator">=</span> value<span class="token punctuation">;</span>      <span class="token keyword">if</span> <span class="token punctuation">(</span>readValue <span class="token operator">==</span> expectedValue<span class="token punctuation">)</span>         value <span class="token operator">=</span> newValue<span class="token punctuation">;</span>      <span class="token keyword">return</span> readValue<span class="token punctuation">;</span>   <span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre><p>其中，<code>value</code>代表了一个内存地址，可以通过<code>getValue()</code>方法获取值。相应地，<code>compareAndSwap()</code>实现了 CAS 算法。</p><p>下面一个类使用<code>EmulatedCAS</code>实现了一个<code>non-synchronized</code>的计数器（这里假设<code>EmulatedCAS</code>不需要<code>synchronized</code>）:</p><pre class=" language-java"><code class="language-java"><span class="token comment" spellcheck="true">// Counter.java (version 2)</span><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Counter</span> <span class="token punctuation">{</span>   <span class="token keyword">private</span> EmulatedCAS value <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">EmulatedCAS</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">{</span>      <span class="token keyword">return</span> value<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token punctuation">}</span>   <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span>    <span class="token punctuation">{</span>      <span class="token keyword">int</span> readValue <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token keyword">while</span> <span class="token punctuation">(</span>value<span class="token punctuation">.</span><span class="token function">compareAndSwap</span><span class="token punctuation">(</span>readValue<span class="token punctuation">,</span> readValue<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">!=</span> readValue<span class="token punctuation">)</span>         readValue <span class="token operator">=</span> value<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token keyword">return</span> readValue<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>   <span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre><p><code>Counter</code>封装了<code>EmulatedCAS</code>实例，并且通过这个实例提供的功能声明了用于获取值和增加计数器值的方法。即，<code>getValue()</code>获取该实例的“当前计数器值”，<code>increment()</code>安全地增加计数器的值。</p><p><code>increment()</code>重复调用<code>compareAndSwap()</code> 直到 <code>readValue</code>的值不再改变，然后就可以改变这个值了。当没有锁牵涉其中的时候，就可以避免竞争以及随之而来的大量上下文切换了。这样性能和代码的可扩展性就能得到提高。</p><blockquote><p>你可能之前了解到<code>ReentrantLock</code> 在高线程争用情况下能够比 <code>synchronized</code>提供更好的性能表现。为了提高性能，<code>ReentrantLock</code>的同步是通过抽象类<code>java.util.concurrent.locks.AbstractQueuedSynchronizer</code>的一个子类来管理的。进一步地，该类利用了未开源的<code>sun.misc.Unsafe</code>类中的<code>compareAndSwapInt()</code>这个 CAS 实现。</p></blockquote><p><a href="https://www.javaworld.com/article/2078848/java-concurrency-java-101-the-next-generation-java-concurrency-without-the-pain-part-2.html?page=3" target="_blank" rel="noopener">原文地址</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+            <tag> CAS </tag>
+            
+            <tag> concurrency </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>log4j和log4j2在springboot中的性能对比</title>
       <link href="/2019/11/17/log4j-he-log4j2-zai-springboot-zhong-de-xing-neng-dui-bi/"/>
       <url>/2019/11/17/log4j-he-log4j2-zai-springboot-zhong-de-xing-neng-dui-bi/</url>
@@ -20,11 +49,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
             <tag> log4j2 </tag>
             
@@ -51,11 +80,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
         </tags>
       
@@ -80,11 +109,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
         </tags>
       
