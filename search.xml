@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>Java强、弱、软、虚四种引用</title>
+      <link href="/2020/01/31/java-qiang-ruo-ruan-xu-si-chong-yin-yong/"/>
+      <url>/2020/01/31/java-qiang-ruo-ruan-xu-si-chong-yin-yong/</url>
+      
+        <content type="html"><![CDATA[<h2 id="值类型和引用类型"><a href="#值类型和引用类型" class="headerlink" title="值类型和引用类型"></a>值类型和引用类型</h2><p>在Java中类型可分为两大类：<strong>值类型</strong>与<strong>引用类型</strong>。值类型就是基本数据类型（如int ,double 等），而引用类型,是指除了基本的变量类型之外的所有类型（如通过 class 定义的类型）。值类型只有一块存储空间，分配在 stack中，而引用类型有两块存储空间，存储引用的空间分配在 stack 上，存储应用所指向的对象空间分配在 heap 中，引用中保存了对象在 heap 中的地址。<br><img src="https://i.loli.net/2020/01/31/dfXcKznwkNvjQ5D.png" alt="java类型的内存表示"></p><h2 id="对象的传参方式"><a href="#对象的传参方式" class="headerlink" title="对象的传参方式"></a>对象的传参方式</h2><p>首选，这里所说的对象包括了<strong>基本数据类型</strong>和<strong>自定义数据类型</strong>（类），因为 java 中一切皆对象。</p><p>当把对象作为参数传递给函数后，函数对形参的更改会不会影响原对象呢？这个问题就引出了 java 是“值传递”还是“引用传递”的问题。</p><p>考虑下面的代码：</p><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">referenceTest</span> <span class="token punctuation">{</span>    <span class="token comment" spellcheck="true">//交换两个变量的值</span>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">Swap</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">,</span><span class="token keyword">int</span> b<span class="token punctuation">)</span><span class="token punctuation">{</span>       <span class="token keyword">int</span> c<span class="token operator">=</span>a<span class="token punctuation">;</span>       a<span class="token operator">=</span>b<span class="token punctuation">;</span>       b<span class="token operator">=</span>c<span class="token punctuation">;</span>       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"a: "</span> <span class="token operator">+</span> a<span class="token punctuation">)</span><span class="token punctuation">;</span>       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"b: "</span> <span class="token operator">+</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">}</span>    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span><span class="token punctuation">{</span>       <span class="token keyword">int</span> c<span class="token operator">=</span><span class="token number">10</span><span class="token punctuation">;</span>       <span class="token keyword">int</span> d<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">;</span>       <span class="token function">Swap</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"After Swap:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"c: "</span><span class="token operator">+</span> c<span class="token punctuation">)</span><span class="token punctuation">;</span>       System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"d: "</span><span class="token operator">+</span> d<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre><p>输出：</p><pre><code>a: 20b: 10After Swap:c: 10d: 20</code></pre><p>Swap 对形参的改变并没有改变传入的实参，所以这里是按<strong>“值传递”</strong>的。</p><p>事实上，从上面的图中可以看出，java 中<strong>基本数据类型</strong>在参数传递的时候是传入的原参数的一个拷贝，函数内部的改变只会改变拷贝值而不会改变原值。而自定义数据类型则不同。从图中可以看出，传参的时候，对引用进行了拷贝传入函数，但是引用指向的却是原来的对象，这个时候如果在函数中对对象进行更改则会影响函数外面的对象，所以这里可以说是<strong>“引用传递”</strong>。</p><p>回到上面的代码，如果我们真的想通过一个函数交换两个基本类型的值应该怎么办呢？两个方法：</p><ol><li>把所有变量封装到类中去</li><li>通过数组可以方便的实现值类型的数据源的交换</li></ol><h2 id="java中的四种引用类型"><a href="#java中的四种引用类型" class="headerlink" title="java中的四种引用类型"></a>java中的四种引用类型</h2><p>分别是指强引用、软引用、弱引用和虚引用</p><h3 id="强引用（StrongReference）"><a href="#强引用（StrongReference）" class="headerlink" title="强引用（StrongReference）"></a>强引用（StrongReference）</h3><p>强引用就是普通引用，也是平时使用最多的一种引用方式。只要某个对象有强引用与之关联，在内存不足的情况下，JVM 宁愿抛出<code>OutOfMemory</code>错误也不会回收这种对象。</p><h3 id="软引用（SoftReference）"><a href="#软引用（SoftReference）" class="headerlink" title="软引用（SoftReference）"></a>软引用（SoftReference）</h3><p>Java 中用<code>java.lang.ref.SoftReference</code>类来表示软引用。对于软引用关联着的对象，只有在内存不足的时候  JVM 才会回收该对象。</p><pre class=" language-java"><code class="language-java">SoftReference<span class="token operator">&lt;</span>String<span class="token operator">></span> sr <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SoftReference</span><span class="token operator">&lt;</span>String<span class="token operator">></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>sr<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre><p>其中<code>get</code>方法用来获取与软引用关联的对象的引用，如果该对象被回收了，则返回 <code>null</code>。</p><p>软引用可以和一个引用队列（<code>ReferenceQueue</code>）联合使用，如果软引用所引用的对象被 JVM 回收，这个软引用就会被加入到与之关联的引用队列中</p><p><strong>应用场景</strong>： 软引用通常用来实现<strong>内存敏感的缓存</strong></p><h3 id="弱引用（WeakReference）"><a href="#弱引用（WeakReference）" class="headerlink" title="弱引用（WeakReference）"></a>弱引用（WeakReference）</h3><p>java中，用<code>java.lang.ref.WeakReference</code>类来表示弱引用，它用来描述非必需对象的，当 JVM 进行垃圾回收时，无论内存是否充足，都会回收被弱引用关联的对象。<br>弱引用可以和一个引用队列（<code>ReferenceQueue</code>）联合使用，如果弱引用所引用的对象被 JVM 回收，这个软引用就会被加入到与之关联的引用队列中</p><p><strong>应用场景</strong>： 弱引用同样通常用来实现内存敏感的缓存。</p><h3 id="虚引用（PhantomReference）"><a href="#虚引用（PhantomReference）" class="headerlink" title="虚引用（PhantomReference）"></a>虚引用（PhantomReference）</h3><p>虚引用和前面的软引用、弱引用不同，它并不影响对象的生命周期。在 java 中用<code>java.lang.ref.PhantomReference</code>类表示。如果一个对象与虚引用关联，则跟没有引用与之关联一样，在任何时候都可能被垃圾回收器回收。</p><p>虚引用<strong>必须</strong>和引用队列关联使用，当垃圾回收器准备回收一个对象时，如果发现它还有虚引用，就会把这个虚引用加入到与之关联的引用队列中。程序可以通过判断引用队列中是否已经加入了虚引用，来了解被引用的对象是否将要被垃圾回收。如果程序发现某个虚引用已经被加入到引用队列，那么就可以在所引用的对象的内存被回收之前采取必要的行动。</p><p><strong>应用场景</strong>：可用来跟踪对象被垃圾回收器回收的活动，当一个虚引用关联的对象被垃圾收集器回收之前会收到一条系统通知。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> java </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> java </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>一文搞懂springboot定时任务</title>
       <link href="/2019/12/30/yi-wen-gao-dong-springboot-ding-shi-ren-wu/"/>
       <url>/2019/12/30/yi-wen-gao-dong-springboot-ding-shi-ren-wu/</url>
@@ -20,11 +45,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
             <tag> scheduler </tag>
             
@@ -80,11 +105,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
             <tag> log4j2 </tag>
             
@@ -111,11 +136,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
         </tags>
       
@@ -140,11 +165,11 @@
       
         <tags>
             
+            <tag> java </tag>
+            
             <tag> springboot </tag>
             
             <tag> spring </tag>
-            
-            <tag> java </tag>
             
         </tags>
       
