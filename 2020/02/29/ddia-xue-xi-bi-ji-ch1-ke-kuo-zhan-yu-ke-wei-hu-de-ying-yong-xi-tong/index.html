@@ -4,9 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="SpringBoot 简介, 木白的菜园">
-    <meta name="description" content="认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？
-是什么在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的">
+    <meta name="keywords" content="DDIA学习笔记, 木白的菜园">
+    <meta name="description" content="引子第一章其实是个简介、大纲性质的章节，主要是介绍可靠性、可扩展性、可维护性的概念，这也是我们设计和维护系统的时候总是会面对的概念，它们穿插在整本书中。本章在介绍这些概念的时候很多地方也是以列举一条条更细的概念来展开的。如果完全按照他的内容">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>SpringBoot 简介 | 木白的菜园</title>
+    <title>DDIA学习笔记 | 木白的菜园</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -305,13 +304,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        SpringBoot 简介
+                        DDIA学习笔记
                     </div>
                 </div>
             </div>
@@ -423,16 +422,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/springboot/">
-                                <span class="chip bg-color">springboot</span>
-                            </a>
-                        
-                            <a href="/tags/spring/">
-                                <span class="chip bg-color">spring</span>
-                            </a>
-                        
-                            <a href="/tags/java/">
-                                <span class="chip bg-color">java</span>
+                            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                                <span class="chip bg-color">分布式</span>
                             </a>
                         
                     </div>
@@ -440,22 +431,13 @@
                 </div>
                 <div class="col s5 right-align">
                     
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/springboot/" class="post-category">
-                                springboot
-                            </a>
-                        
-                    </div>
-                    
                 </div>
             </div>
 
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-10-28
+                    2020-02-29
                 </div>
                 
                 
@@ -473,60 +455,59 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>认识一个东西我们先来试着回答三个经典的问题问题，是什么？为什么？怎么样？</p>
-<h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>在介绍 SpringBoot 之前我们首先来简单介绍一下 Spring。Spring 是诞生于2002年的 Java 开发框架，可以说已经成为 Java 开发的事实标准。所谓事实标准就是虽然 Java 官方没有说它就是开发标准，但是在当前 Java 开发的众多项目中，当我们谈到产品级的 Java 项目的时候，大多都是基于 Spring 或者应用了 Spring 特性的。</p>
-<p>Spring 基于 IOC 和 AOP 两个特性对 Java 开发本身进行了大大的简化。但是一个大型的项目需要集成很多其他组件，比如一个 WEB 项目，至少要集成 MVC 框架、Tomcat 这种 WEB 容器、日志框架、ORM框架，连接数据库要选择连接池吧……使用 Spring 的话每集成一个组件都要去先写它的配置文件，比较繁琐且容易出错。</p>
-<p>然后就有了SpringBoot。</p>
-<p>Spring Boot 是由 Pivotal 团队提供的全新框架，2014 年 4 月发布 Spring Boot 1.0 2018 年 3 月 Spring Boot 2.0发布。它是对spring的进一步封装，其设计目的是用来简化 Spring 应用的初始搭建以及开发过程。怎么简化的呢？就是通过封装、抽象、提供默认配置等方式让我们更容易使用。</p>
-<p>SpringBoot 基于 Spring 开发。SpringBoot 本身并不提供 Spring 框架的核心特性以及扩展功能，也就是说，它并不是用来替代 Spring 的解决方案，而是和 Spring 框架紧密结合用于提升 Spring 开发者体验的工具。</p>
-<p>关于 SpringBoot 有一句很出名的话就是<strong>约定大于配置</strong>。采用 Spring Boot 可以大大的简化开发模式，它集成了大量常用的第三方库配置，所有你想集成的常用框架，它都有对应的组件支持，例如 Redis、MongoDB、Jpa、kafka，Hakira 等等。SpringBoot 应用中这些第三方库几乎可以零配置地开箱即用，大部分的 SpringBoot 应用都只需要非常少量的配置代码，开发者能够更加专注于业务逻辑。</p>
-<h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>为什么会产生 SpringBoot 呢？</p>
-<p>刚才说 SpringBoot 简化了基于 Spring 开发，这只是最直观的一方面，事实上 SpringBoot 的诞生有它所处的大时代背景这个原因在里面的，那就是微服务，这也是谈 SpringBoot 必谈微服务的原因。</p>
-<img src="https://i.loli.net/2019/10/28/Qq9ywef6MlPEkCT.jpg" alt="martin_fowler.jpg" style="zoom:50%;" />
+                <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>第一章其实是个简介、大纲性质的章节，主要是介绍可靠性、可扩展性、可维护性的概念，这也是我们设计和维护系统的时候总是会面对的概念，它们穿插在整本书中。本章在介绍这些概念的时候很多地方也是以列举一条条更细的概念来展开的。如果完全按照他的内容来来写就会变成照搬，所以我会加一点扩展和我在实际工作中遇到的情况。</p>
+<h2 id="认识数据系统"><a href="#认识数据系统" class="headerlink" title="认识数据系统"></a>认识数据系统</h2><h3 id="数据系统的分类"><a href="#数据系统的分类" class="headerlink" title="数据系统的分类"></a>数据系统的分类</h3><p>从负载类型来区分的话，数据系统可以分为两种典型的负载类型，<strong>数据密集型</strong>和<strong>计算密集型</strong>。</p>
+<p>其中数据密集型以大数据相关技术为代表，最有名的就是Hadoop生态的各种组件，如用于数据存储的 HDFS</p>
+<p>、HBASE，用于数据批处理的 MapReduce 和 Spark，用于流式处理的 Storm、Spark Streaming。从这些组件的功能就可以看出，数据密集型主要关注的是用分布式系统来<strong>存储</strong>和<strong>处理</strong>数据。</p>
+<p>计算密集型以目前非常火的深度学习为代表，因为深度学习模型中的网状模型的训练需要大量的输入和待学习参数，学习过程中每一次正向传播和反向传播更新的参数量可能是百万、千万甚至亿级别的，需要大量的计算量，这些计算大多是矩阵计算，所以 GPU 比 CPU 更擅长这种运算。</p>
+<p>当然这种分类只是从负载类型来看，在实际应用中这两者其实没有那么明显的界限。深度学习可以看成是大数据的上层应用，依赖数据处理系统进行数据存储、数据清洗、特征工程等。他们都属于数据系统，但是本书主要关注的是前者，也就是数据密集型系统设计。</p>
+<h3 id="数据系统的组成"><a href="#数据系统的组成" class="headerlink" title="数据系统的组成"></a>数据系统的组成</h3><img src="https://i.loli.net/2020/02/29/JwaouRBLNnDvfxS.png" alt="数据系统架构图" style="zoom:150%;" />
 
-<p>2014年一个叫 Martin Fowler （同时也是经典著作《重构：改善既有代码的设计》一书的作者）发表了一篇关于<a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">微服务的博客</a>，比较形象生动地介绍了什么是微服务，然后微服务才慢慢被人所熟知。他说微服务其实是一种架构风格，我们在开发一个应用的时候这个应用应该是由一组小型服务组成，每个小型服务都运行在自己的进程内；小服务之间通过HTTP的方式进行互联互通。和微服务相对应的就是我们之前的，单体应用，就是大名鼎鼎的 all in one 的风格。这种风格把所有的东西都写在一个应用里面，比如我们熟悉的OA，CRM，ERP系统，所有的页面，所有的代码都放在一起，打成打成一个war包，然后把war包放在Tomcat容器中运行。</p>
-<p><img src="https://i.loli.net/2019/10/28/DXS84IniF7YrKBW.png" alt="microservice.png"></p>
-<p>这种传统web开发的架构模式当然也有它的优势，比如它测试部署比较简单，因为不涉及到多个服务的互联互调，只需要把一个包上传到服务器就行了，可以说是一人吃饱全家不饿。同样也不会给运维带来麻烦，方便水平扩展，只需要又把相同的应用复制多份放在不同的服务器中就达到了扩展的目的。</p>
-<p>单体应用的的缺点也显而易见，容易牵一发而动全身，比如要更改一个小小的功能，就可能需要重新部署整个应用。当然，更大的挑战就是日益增长的用户需求。</p>
-<h2 id="怎么样"><a href="#怎么样" class="headerlink" title="怎么样"></a>怎么样</h2><p>介绍了一大堆，那 SpringBoot 的开箱即用是怎么体现的呢。</p>
-<p>SpringBoot 官方推荐的构建应用的方式是使用 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a>，直接在网页上选择好构建工具、语言、SpringBoot 版本，填好自己的项目名和初始依赖，然后点<strong>Generate</strong> 按钮，就能下载一个构建好的工程的zip包，只需要把这个包解压之后导入IDE就可以了。</p>
-<p>这已经是一个包含依赖的、完整的、可独立运行的springboot应用了！你所需要做的就是往里面填充自己的业务代码！</p>
-<p>当然，如果能直接使用IDE来进行上述操作可以让这个过程变得更顺滑。如果你使用的是 IDEA 商业版的话，新建工程的时候直接有 Spring 的选项；如果是IDEA社区版的话，可以安装 <code>Spring Assistant</code> 这个插件可以实现同样的功能。它们的原理是帮你把连接 <a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a> 并下载解压这个过程自动化了，所以只需要保持网络畅通就行了。</p>
-<table>
-<thead>
-<tr>
-<th align="center">SpringBoot</th>
-<th align="center">Spring + Spring MVC</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><a href="https://start.spring.io/" target="_blank" rel="noopener">Spring Initializr</a></td>
-<td align="center">1. 安装Tomcat<br>2. 引入spring必要依赖<br>  spring-webmvc<br>spring-context<br>spring-beans<br>spring-aspects<br>…<br>3. 引入必要的第三方依赖，jdbc,test,log这些依赖依然要注意版本兼容问题<br>4. 新建webapp/WEB-INFO/web.xml<br>5. applicationContext.xml<br>6. Springmvc.xml<br>…</td>
-</tr>
-</tbody></table>
-<p>那如果要用原生的springMVC来实现这个事情就复杂了，可以看看右边我大概罗列的这些步骤，当时学的时候让我我非常头疼。要单独安装Tomcat，安装的过程中要注意版本和当前的spring版本是否兼容，手动引入spring各个模块的依赖。pom.xml就不说了，maven工程都要用到，然后还有web.xml-用来配置servlet、拦截规则、字符编码器等等，applicationContext.xml，springmvc.xml 等一大堆xml文件……</p>
-<p>这个过程对初学者非常不友好，记忆这些步骤和配置文件能让人崩溃，xml这种表达方式又不是很直观。这些东西称为脚手架，在小公司里面会搭建这些东西就可以算半个师傅了，小弟们就可以在搭好的架子里面写业务代码了。</p>
-<p>再聊回微服务，试想一下，如果我们要跟上时代的步伐，使用微服务去开发软件，每个功能模块都部署成一个单独的服务，这个时候我们再使用纯粹的 Spring 去开发，每开发一个服务都需要重复的搭建项目骨架，然后编写各种配置文件，几十几百个服务加起来，这部分工作量是很大的，这还不算业务代码的开发时间。这种时候就是 SpringBoot 发挥它开箱即用的特质的时候了。然后多个微服务之间再通过 Spring 全家桶里面的 SpringCloud 进行管理，比如服务注册、服务发现等等。所以我们现在说 SpringBoot 是 Java 企业级开发的一站式解决方案。</p>
-<p><img src="https://i.loli.net/2019/10/28/NDhQZmzAxLRMyjp.jpg" alt="整个世界清静了"></p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>软件工程是一个不断抽象，不断把复杂的东西简化的这样一套理论和工具，不是说使用起来越复杂就可以彰显我的高端和牛逼，有时候反而是做多错多。所以SpringBoot告诉我们这些工作都没必要，框架来做就行了，你们可以专注于代码逻辑。</p>
-<p>SpringBoot 具有如下优点：</p>
+<p>这是书中给出的一张数据系统的架构图，其实如果做过 web 服务的可能会对它感到亲切，就是一个简单的网站的后端架构图，或者说更通用一点，是基于 request 和 response 提供服务的这样一个应用。</p>
+<p>客户端调用到达之后，如果是<strong>读</strong>请求，则先访问内存中的缓存数据，如果缓存中没有命中则需要击穿到“主数据库”中取数，然后再通过应用代码把数据更新到缓存中；如果是<strong>写</strong>数据，则先写“主数据库”，然后再把数据更新到缓存中。这也是网站最基本的处理流程和相关组件。</p>
+<p>如果有搜索请求，则应用代码会到全文索引数据库中查找，比如我们熟悉的 ElasticSearch。</p>
+<p>对于不需要马上响应或者马上执行的任务（比如图中发邮件的例子），可以先把请求放到消息队列中，然后由其他的线程或者进程从队列中把消息拿出来然后异步地处理掉。</p>
+<p>在这张架构图中涉及到的数据组件有，数据库(database)、缓存(cache) 、流式处理(stream processing)、批处理(batch processing)。这些组件在有一定数据量的服务中还是比较常见的。并且在图中每个组件都是以单点的形式在图中展现的，在实际应用中往往会更加复杂，图中的每个组件节点都可能是一个集群。还有一些属于数据密集型应用的组件并没有在图中得到展现，比如围绕hadooop生态链的批处理工具。</p>
+<p>整本书也是围绕着这些组件的发展、应用、原理以及组件与组件之间的交互来展开的。</p>
+<h3 id="可靠性"><a href="#可靠性" class="headerlink" title="可靠性"></a>可靠性</h3><h3 id="对软件的期望"><a href="#对软件的期望" class="headerlink" title="对软件的期望"></a>对软件的期望</h3><p>软件作为工具，我们就会对这些工具有着特定的期望。典型的期望如下：</p>
 <ul>
-<li><p>快速创建独立运行的Spring项目以及与主流框架集成、</p>
+<li>应用程序表现出用户所期望的功能<br>这是对软件作为工具最基本的要求，是锤子至少得能敲东西，是钉子至少得能钉东西是吧。</li>
+<li>允许用户犯错，允许用户以出乎意料的方式使用软件<br>所谓出乎意料的方式，就是指没有在PRD、设计文档、用户使用手册上出现的操作。当用户出现这些操作的时候，至少要保证服务不能崩吧，如果能有错误提示信息甚至在用户出错之后能够引导用户进行正确操作就更好了。 最简单的例子就是参数校验，不让错误的请求流向应用更深层次的地方；还举个例子就是使用预编译的SQL语句，防止注入攻击等，在Java中通常框架已经帮我们做了。</li>
+<li>在预期的负载和数据量下，性能满足要求<br>在电商网站中，如“双十一”、“双十二”这种大促的时候，网站流量会成倍地增加。而高并发的请求往往是网站性能的大杀器。这就要求我们在设计网站的时候就要考虑这种问题，也就是设计负载要远远大于平时的实际负载，并且在大流量到来之前通过压测、模拟和软硬件的扩容来合理应对。</li>
+<li>系统能防止未经授权的访问和滥用<br>这就要靠系统的认证（Authentication）授权（Authorization）模块了。这两者的区别可以简单类比为，认证就是“证明你是你”；授权则是告诉你可以访问哪些模块。</li>
+</ul>
+<p>当软件对这些期望满足得越多，则说明该软件越“可靠”。</p>
+<h3 id="硬件可靠性"><a href="#硬件可靠性" class="headerlink" title="硬件可靠性"></a>硬件可靠性</h3><p>硬盘崩溃、内存出错、机房断电、拔错网线……这些都是属于硬件可靠性的范畴。通常的做法就是提供“冗余”。磁盘阵列（RAID）、热插拔内存、备用电源或者发电机等都这这种“冗余”的具体体现。</p>
+<h3 id="软件可靠性"><a href="#软件可靠性" class="headerlink" title="软件可靠性"></a>软件可靠性</h3><p>在对软件的期望小节中，我们谈到软件可靠性的表现形式。而在上面的数据应用架构图中，数据可能流经的每一个分支、每一个组件都会面临可靠性的挑战，尤其是在负载变高的情况下。那么要怎么实现可靠性呢。<br>对于 <em>Application Code</em> 来说保证可靠性的方式就是避免单点。避免单点的方式又分为横向扩展和纵向拆分。所谓横向扩展，就是把同一套代码部署在多个服务器中，然后用负载均衡把客户端的请求分散到各个服务中，降低单个服务的压力。纵向拆分就是把同一个请求路径上的不同软件模块部署到不同的服务器中，然后服务与服务之间的请求在用HTTP或者rpc串联起来。比如在Java中，就可以把经典的三层结构Controller、Service、和DAO层作为独立的服务部署，这也正是微服务的思想。<br>对于数据库来说，想要提高性能常用的方式包括：优化SQL、增加索引、分库分表、读写分离。在高并发场景中，数据库的选型已经数据模型的选项变得至关重要。在跟我们公司的DBA沟通的时候，对于不同的请求量（QPS），他给出一些比较有参考价值的选型建议：</p>
+<ul>
+<li><p>QPS 1-9k，直接用mysql就能搞定;</p>
 </li>
-<li><p>使用嵌入式的Servlet容器，应用无需打成WAR包</p>
+<li><p>10k以上的写入QPS，mysql就需要考虑分库分表；</p>
 </li>
-<li><p>Starters自动依赖与版本控制</p>
+<li><p>几十k的情况下，也可以考虑TiDB这种NewSql，我们之前在实际工作中压测过 TIDB，水平大概就处于这样一个水平；</p>
 </li>
-<li><p>大量的自动配置，简化开发，也可修改默认值</p>
-</li>
-<li><p>无需配置XML，无代码生成，开箱即用</p>
-</li>
-<li><p>准生产环境的运行时应用监控</p>
-</li>
-<li><p>与云计算的天然集成</p>
+<li><p>100k以上， mysql 分库分表资源消耗很大，性价比变低，TiDB 同样已经比较吃力，可以考虑使用考虑 kv 存储这种 Nosql。</p>
 </li>
 </ul>
-<p>这些优点这篇文章中有的涉及到了，有的还没介绍。我会在之后的文章中陆续把这些话题展开。那么现在，你要做的就是，赶紧把 SpringBoot 用起来吧！</p>
+<p>Kv存储的话，也有两条路线，一条就是有钱就上 redis，因为是内存，比较贵，DBA那边的观点是几十几百个G还能忍，太多就不行，太伤钱了得评估性价比；另外一条就是用 pika 或者 MongoDB 这种分布式 kv 存储，然后再用 SSD 进行支撑。</p>
+<p>除了QPS，也可以根据响应时间（P99）作数据库选型：</p>
+<ul>
+<li><p>如果使用TiDB，必须将预期响应时间定为100毫秒以上</p>
+</li>
+<li><p>对mysql进行小心设计和表结构优化，P99预期可以做到10毫秒以内</p>
+</li>
+<li><p>需要毫秒级别的响应只能上 redis 这种内存数据库</p>
+</li>
+</ul>
+<p>这里我们较为详细讨论的应用层代码和数据库，但是事实上，图中画出的每一个组件，以及在软件构建过程中引入到系统中的每一个组件，都需要考虑可靠性问题。只有这样我们才能说，整个系统是可靠的。</p>
+<h2 id="可扩展性"><a href="#可扩展性" class="headerlink" title="可扩展性"></a>可扩展性</h2><p>可扩展性意味着，如果系统以某种方式增长，我们应对增长的措施有哪些。</p>
+<p>书中举了 twitter 用户发布推文的例子，还是挺有代表性的。我们可以把它想象成微博，可以进一步想到每次各路明星爆出大瓜都对微博来说都是一次巨大的挑战，而技术就是在这种挑战中不断进步的。</p>
+<h3 id="人为错误"><a href="#人为错误" class="headerlink" title="人为错误"></a>人为错误</h3><p>这部分其实总结一下就是–<strong>人是不可靠的</strong>。首先要承认人类这个感性、主观的物种的不可靠，然后才会想办法去规避这些不可靠带来的麻烦。这也正是我们在软件的生命周期中引入各种操作来避免这种不可靠的原因，包括设计文档、流程规范、代码审核、代码测试、技术运维……</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文是《数据密集型应用系统设计》的第一篇读书笔记，主要是对全书的主角——“数据系统”——有个大概的认识。全篇比较偏科普性质，而且之前在组内有过相关分享，所以写起来比较顺手。以后也不知道能不能坚持写这本书的读书笔记，所以说不定是最后一篇呢，毕竟你永远也不知道自己能懒到什么程度。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li>《数据密集型应用系统设计》</li>
+<li><a href="https://mp.weixin.qq.com/s/m6jD0oB0sIHpH1z2gc3pew" target="_blank" rel="noopener">Shopee 的分布式数据库实践之路</a></li>
+</ol>
 
             </div>
             <hr/>
@@ -552,7 +533,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://pengcheng.site/2019/10/28/springboot-jian-jie/">https://pengcheng.site/2019/10/28/springboot-jian-jie/</a>
+                    <a href="https://pengcheng.site/2020/02/29/ddia-xue-xi-bi-ji-ch1-ke-kuo-zhan-yu-ke-wei-hu-de-ying-yong-xi-tong/">https://pengcheng.site/2020/02/29/ddia-xue-xi-bi-ji-ch1-ke-kuo-zhan-yu-ke-wei-hu-de-ying-yong-xi-tong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -590,16 +571,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/springboot/">
-                                    <span class="chip bg-color">springboot</span>
-                                </a>
-                            
-                                <a href="/tags/spring/">
-                                    <span class="chip bg-color">spring</span>
-                                </a>
-                            
-                                <a href="/tags/java/">
-                                    <span class="chip bg-color">java</span>
+                                <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                                    <span class="chip bg-color">分布式</span>
                                 </a>
                             
                         </div>
@@ -767,7 +740,7 @@
         repo: 'blogtalk',
         owner: 'mooba',
         admin: ["mooba"],
-        id: '2019-10-28T11-23-43',
+        id: '2020-02-29T20-59-00',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -788,54 +761,44 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/10/28/springboot-zi-dong-pei-zhi-qian-xi/">
+                <a href="/2020/02/29/ddia-xue-xi-bi-ji-ch1-ke-kuo-zhan-yu-ke-wei-hu-de-ying-yong-xi-tong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="SpringBoot 自动配置浅析">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DDIA学习笔记">
                         
-                        <span class="card-title">SpringBoot 自动配置浅析</span>
+                        <span class="card-title">DDIA学习笔记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            主要从依赖仲裁中心和@SpringBootApplication注解来简单分析一下自动配置原理
+                            DDIA第一章的读书笔记
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2019-10-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-29
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/springboot/" class="post-category">
-                                    springboot
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            木白
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/springboot/">
-                        <span class="chip bg-color">springboot</span>
-                    </a>
-                    
-                    <a href="/tags/spring/">
-                        <span class="chip bg-color">spring</span>
-                    </a>
-                    
-                    <a href="/tags/java/">
-                        <span class="chip bg-color">java</span>
+                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
+                        <span class="chip bg-color">分布式</span>
                     </a>
                     
                 </div>
@@ -849,31 +812,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/10/25/che-zhan/">
+                <a href="/2020/01/31/java-qiang-ruo-ruan-xu-si-chong-yin-yong/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="车站">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Java强、弱、软、虚四种引用">
                         
-                        <span class="card-title">车站</span>
+                        <span class="card-title">Java强、弱、软、虚四种引用</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            夜晚的车站，陌生的人，疲惫的身体，归家的心
+                            本文介绍java强、弱、软、虚四种引用
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-10-25
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-01-31
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9A%8F%E7%AC%94/" class="post-category">
-                                    随笔
+                            <a href="/categories/java/" class="post-category">
+                                    java
                                 </a>
                             
                             
@@ -883,8 +846,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%9A%8F%E7%AC%94/">
-                        <span class="chip bg-color">随笔</span>
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
                     </a>
                     
                 </div>
