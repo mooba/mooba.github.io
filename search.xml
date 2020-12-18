@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Idea中使用gradle编译spring源码</title>
+      <link href="/2020/12/18/idea-zhong-shi-yong-gradle-bian-yi-spring-yuan-ma/"/>
+      <url>/2020/12/18/idea-zhong-shi-yong-gradle-bian-yi-spring-yuan-ma/</url>
+      
+        <content type="html"><![CDATA[<p>废话少说，直接进入正题！</p><h2 id="一、下载及预编译"><a href="#一、下载及预编译" class="headerlink" title="一、下载及预编译"></a>一、下载及预编译</h2><p>首先git clone源码到本地：</p><pre class=" language-Bash"><code class="language-Bash">https://github.com/spring-projects/spring-framework.git </code></pre><p>代码clone到本地之后进入到文件件中<code>cd spring-framework</code>，这个时候需要关注<a href="http://import-into-idea.md" target="_blank" rel="noopener"><code>import-into-idea.md</code></a>这个文件，这是用idea编译源码的说明文件。根据里面的说明，在编译整个源码前需要预先编译<code>spring-oxm</code>和<code>spring-core</code>这两个模块，依次运行命令<code>./gradlew :spring-core:compileTestJava</code>和<code>./gradlew :spring-oxm:compileTestJava</code> 。编译过程如下，当然首先是安装好gradle：</p><pre class=" language-Bash"><code class="language-Bash">$ ./gradlew :spring-oxm:compileTestJavaWelcome to Gradle 6.7.1!Here are the highlights of this release: - File system watching is ready for production use - Declare the version of Java your build requires - Java 15 supportFor more details see https://docs.gradle.org/6.7.1/release-notes.htmlStarting a Gradle Daemon, 1 busy Daemon could not be reused, use --status for details> Task :spring-oxm:genJaxb[ant:javac] : warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable buildsDeprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.Use '--warning-mode all' to show the individual deprecation warnings.See https://docs.gradle.org/6.7.1/userguide/command_line_interface.html#sec:command_line_warningsBUILD SUCCESSFUL in 37s40 actionable tasks: 24 executed, 16 from cache# pengchengbai @ Pengcheng-Bai in ~/IdeaProjects/spring-framework on git:master o [11:42:36]$ ./gradlew :spring-core:compileTestJavaDeprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.Use '--warning-mode all' to show the individual deprecation warnings.See https://docs.gradle.org/6.7.1/userguide/command_line_interface.html#sec:command_line_warningsBUILD SUCCESSFUL in 7s17 actionable tasks: 2 from cache, 15 up-to-date</code></pre><h2 id="二、导入Idea并编译"><a href="#二、导入Idea并编译" class="headerlink" title="二、导入Idea并编译"></a>二、导入Idea并编译</h2><ol><li><p>使用Idea导入源码：File -&gt; New -&gt; Project from Existing Souces…然后选择我们的<code>spring-framework</code>目录就行了 注意这里是选择New 而不是Open；</p></li><li><p>然后在Import Project 面板中选择gradle，点击Finish；</p></li><li><p>可以发现IDEA会自动开始构建编译spring源码。 </p></li></ol><h2 id="三、验证"><a href="#三、验证" class="headerlink" title="三、验证"></a>三、验证</h2><p>编译好源码之后怎么验证构建和编译是否成功呢？我们可以自己写一段代码，然后依赖我们构建的源码，如果能够正常运行，则说明构建成功。</p><ol><li><p>在spring-framework项目下新建一个module，在新建的时候gradle构建（当然maven也可以，这里只是为了跟源码保持统一），然后Module SDK选择Java8；</p></li><li><p>然后在路径<code>src/main/java</code>中创建包和源代码，我这里创建了一个配置类：</p></li></ol><pre class=" language-Java"><code class="language-Java">package site.pengcheng;import org.springframework.context.annotation.ComponentScan;import org.springframework.context.annotation.Configuration;/** * @author pengchengbai * @description * @date 2020/12/18 11:50 上午 */@Configuration@ComponentScan("site.pengcheng")public class AppConfig {} </code></pre><p>然后再创建一个普通的<code>spring Bean</code>：</p><pre class=" language-Java"><code class="language-Java">package site.pengcheng.pojo;import org.springframework.stereotype.Component;/** * @author pengchengbai * @description * @date 2020/12/18 11:51 上午 */@Componentpublic class Hello {  public void hello(){    System.out.println("Hello, world");  }} </code></pre><p>最后创建一个测试类：</p><pre class=" language-Java"><code class="language-Java">package site.pengcheng;import org.springframework.context.annotation.AnnotationConfigApplicationContext;import site.pengcheng.pojo.Hello;/** * @author pengchengbai * @description * @date 2020/12/18 11:52 上午 */public class TestHello {  public static void main(String[] args) {    AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);    Hello bean = ac.getBean(Hello.class);    bean.hello();  }}</code></pre><p>这里使用<code>AnnotationConfigApplicationContext</code>作为spring上线文去获取bean，并运行bean中的方法。运行main方法，如果输出如下信息则表示成功：</p><pre class=" language-Java"><code class="language-Java">3:04:34 下午: Executing task 'TestHello.main()'...Starting Gradle Daemon...Gradle Daemon started in 1 s 577 ms> Task :buildSrc:compileJava UP-TO-DATE> Task :buildSrc:compileGroovy NO-SOURCE> Task :buildSrc:pluginDescriptors UP-TO-DATE...// 省略> Task :spring-context:jar UP-TO-DATE> Task :spring-study:compileJava> Task :spring-study:classes> Task :spring-study:TestHello.main()Hello, worldDeprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.Use '--warning-mode all' to show the individual deprecation warnings.See https://docs.gradle.org/6.7.1/userguide/command_line_interface.html#sec:command_line_warningsBUILD SUCCESSFUL in 16s35 actionable tasks: 2 executed, 33 up-to-date3:04:51 下午: Task execution finished 'TestHello.main()'.</code></pre><ol><li>最后就可以在spring的源码海洋中恣意畅游啦！</li></ol><h2 id="四、后记"><a href="#四、后记" class="headerlink" title="四、后记"></a>四、后记</h2><p>在这个过程中可能会遇到各种各样的报错，要么是idea版本问题，要么是gradle版本问题，要么是kotlin版本问题，还有的报错根本不知道什么问题。我这里只是记录了成功编译的那次的情况，仅做参考，遇到具体的问题还得具体解决，如果不想知道错误原因就卸载、删除、推翻重来！总会成功的！</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>再谈Java中的四种引用</title>
       <link href="/2020/08/09/zai-tan-java-zhong-de-si-chong-yin-yong/"/>
       <url>/2020/08/09/zai-tan-java-zhong-de-si-chong-yin-yong/</url>
@@ -108,11 +121,11 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> springboot </tag>
             
             <tag> spring </tag>
+            
+            <tag> java </tag>
             
             <tag> scheduler </tag>
             
@@ -168,11 +181,11 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> springboot </tag>
             
             <tag> spring </tag>
+            
+            <tag> java </tag>
             
             <tag> log4j2 </tag>
             
@@ -199,11 +212,11 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> springboot </tag>
             
             <tag> spring </tag>
+            
+            <tag> java </tag>
             
         </tags>
       
@@ -228,11 +241,11 @@
       
         <tags>
             
-            <tag> java </tag>
-            
             <tag> springboot </tag>
             
             <tag> spring </tag>
+            
+            <tag> java </tag>
             
         </tags>
       
