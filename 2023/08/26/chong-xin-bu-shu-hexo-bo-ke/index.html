@@ -4,9 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Java并发编程：用Lock接口自定义同步组件, 木白的菜园">
-    <meta name="description" content="简介本文将简单介绍Lock接口和AbstractQueuedSynchronizer同步器，并基于它们两个实现一个取名为互斥锁的同步组件
-Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件，当然也能够实现锁，因为锁">
+    <meta name="keywords" content="重新部署hexo博客, 木白的菜园">
+    <meta name="description" content="我的博客是用hexo框架在之前公司的电脑搭建的，然后同步到github page并绑定自己域名实现访问。在我的印象中，github已经上已经有了，就不用担心丢失了。当我今天想着要重新在自己的电脑上部署原来的博客的时候才发现完全不是那么回事，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +13,7 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Java并发编程：用Lock接口自定义同步组件 | 木白的菜园</title>
+    <title>重新部署hexo博客 | 木白的菜园</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -305,13 +304,13 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Java并发编程：用Lock接口自定义同步组件
+                        重新部署hexo博客
                     </div>
                 </div>
             </div>
@@ -423,8 +422,8 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/java-juc-concurrency/">
-                                <span class="chip bg-color">java,juc,concurrency</span>
+                            <a href="/tags/%E9%9A%8F%E7%AC%94/">
+                                <span class="chip bg-color">随笔</span>
                             </a>
                         
                     </div>
@@ -438,7 +437,7 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-05-24
+                    2023-08-26
                 </div>
                 
                 
@@ -456,117 +455,8 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本文将简单介绍<code>Lock</code>接口和<code>AbstractQueuedSynchronizer</code>同步器，并基于它们两个实现一个取名为互斥锁的同步组件</p>
-<h2 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h2><p>在Java SE 5之后并发包中提供了<code>Lock</code>接口来实现同步组件，当然也能够实现锁，因为锁是一种特定的同步组件。它实现的锁能够提供和<code>Synchronized</code>的类似的同步功能并且拥有更多的灵活性。这些灵活性主要表现在一下三个方面：</p>
-<ol>
-<li>可以尝试非阻塞地获取锁：<code>tryLock()</code>相关方法没有获取到锁能够理解返回而不是阻塞等待</li>
-<li>能被中断地获取锁：获取到锁的线程能够响应中断，中断时中断异常抛出并且锁释放</li>
-<li>超时获取锁：如果指定时间内没有获取到锁则返回</li>
-</ol>
-<h2 id="同步器"><a href="#同步器" class="headerlink" title="同步器"></a>同步器</h2><p>队列同步器<code>AbstractQueuedSynchronizer</code>（AQS，简称同步器）是用来构建同步组件的基础框架，它使用一个int成员变量表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队工作。<br>同步器的设计是基于<strong>模板方法模式</strong>的。定义同步器时，我们可以通过继承AQS来实现。AQS是一个抽象类，其中我们需要关注的方法方法可大致分为3类：</p>
-<ol>
-<li>访问或修改同步状态的3个方法，分别是：<ul>
-<li><code>getState()</code>：获取当前同步状态</li>
-<li><code>setState(int newState)</code>: 设置当前同步状态</li>
-<li><code>compareAndSetState(int expect, int update)</code>: 使用CAS原子地设置当前状态</li>
-</ul>
-</li>
-<li>可以在子类中重写的方法;</li>
-<li>定义好的模板方法，这些模板方法会调用2中重写好的方法，它们基本也可以分为三类：<ul>
-<li>独占式获取与释放同步状态</li>
-<li>共享式获取与释放同步状态</li>
-<li>查询同步队列中的等待线程情况</li>
-</ul>
-</li>
-</ol>
-<h2 id="自定义同步组件"><a href="#自定义同步组件" class="headerlink" title="自定义同步组件"></a>自定义同步组件</h2><p>有了上面两方面的基础知识，我们就可以自定义同步组件了。<br>自定义同步组件就是写一个<code>Lock</code>接口的实现类，该实现基本都是通过聚合一个<strong>同步器的子类</strong>来完成线程访问控制的。而同步器的子类推荐被定义为同步组件的静态内部类。<br>下面自定义了一个“独占锁”的同步组件，其目的是同一个时刻只能有一个线程获取到锁，而其他获取锁的线程只能处于同步队列中等待。代码如下：</p>
-<pre class=" language-java"><code class="language-java"><span class="token keyword">package</span> site<span class="token punctuation">.</span>pengcheng<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>lock<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>TimeUnit<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>locks<span class="token punctuation">.</span>AbstractQueuedSynchronizer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>locks<span class="token punctuation">.</span>Condition<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>concurrent<span class="token punctuation">.</span>locks<span class="token punctuation">.</span>Lock<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @author pengchengbai
- * @description
- * @date 2020/5/24 11:35 上午
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Mutex</span> <span class="token keyword">implements</span> <span class="token class-name">Lock</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">Sync</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractQueuedSynchronizer</span> <span class="token punctuation">{</span>
-
-        <span class="token comment" spellcheck="true">// 是否处于占用状态</span>
-        <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">isHeldExclusively</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">// 当状态为0的时候获取锁</span>
-        <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">tryAcquire</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">compareAndSetState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token function">setExclusiveOwnerThread</span><span class="token punctuation">(</span>Thread<span class="token punctuation">.</span><span class="token function">currentThread</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        <span class="token comment" spellcheck="true">// 释放锁，将状态设置为0</span>
-        <span class="token annotation punctuation">@Override</span>
-        <span class="token keyword">protected</span> <span class="token keyword">boolean</span> <span class="token function">tryRelease</span><span class="token punctuation">(</span><span class="token keyword">int</span> arg<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">getState</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-                <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalMonitorStateException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-            <span class="token function">setExclusiveOwnerThread</span><span class="token punctuation">(</span>null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token function">setState</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-
-        Condition <span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">ConditionObject</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-
-
-    <span class="token comment" spellcheck="true">/**
-     * 下面的方法表示将同步组件的操作代理给自定义同步器Sync
-     */</span>
-
-    <span class="token keyword">private</span> <span class="token keyword">final</span> Sync sync <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Sync</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        sync<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">lockInterruptibly</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-        sync<span class="token punctuation">.</span><span class="token function">acquireInterruptibly</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> sync<span class="token punctuation">.</span><span class="token function">tryAcquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">tryLock</span><span class="token punctuation">(</span><span class="token keyword">long</span> time<span class="token punctuation">,</span> TimeUnit unit<span class="token punctuation">)</span> <span class="token keyword">throws</span> InterruptedException <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> sync<span class="token punctuation">.</span><span class="token function">tryAcquireNanos</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> unit<span class="token punctuation">.</span><span class="token function">toNanos</span><span class="token punctuation">(</span>time<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">unlock</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        sync<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token comment" spellcheck="true">// 返回一个Condition，每个condition都包含了一个condition队列</span>
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> Condition <span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> sync<span class="token punctuation">.</span><span class="token function">newCondition</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
-<p>通过这个示例可以看出，当用户使用独占锁这个同步组件的时候，并不会直接和内部的同步器打交道，而是使用Mutex提供的方法（Lock中定义方法）。之前也说到，AQS是用来构建同步组件的基础框架，它们这种“合作”方式可以大大降低实现一个自定义同步组件的门槛。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>同步器是实现同步组件的关键。通过聚合同步器实现同步组件的时候，内部利用了同步器实现具体语义，对使用者隔离了实现细节。可以这样理解，同步组件（比如锁）是面向使用者的，它定义了使用者与其交互的接口，屏蔽了具体实现；同步器是面向同步组件的，它屏蔽了同步状态管理、线程排队、等待与唤醒等底层操作。锁和同步器很好地隔离了使用者和实现者所需关注的领域。</p>
+                <p>我的博客是用<code>hexo</code>框架在之前公司的电脑搭建的，然后同步到<code>github page</code>并绑定自己域名实现访问。在我的印象中，github已经上已经有了，就不用担心丢失了。当我今天想着要重新在自己的电脑上部署原来的博客的时候才发现完全不是那么回事，github上的数据都是经过hexo解析过的，如果没有原始文件的话（md）,我就只有一堆HTML…</p>
+<p>捣鼓了半天之后之后才想起，我可能在离职的时候把博客相关的原始数据从公司电脑搞出来了（红线操作了），然后去网盘上找到之后这事儿才算有眉目了，可以继续推进。</p>
 
             </div>
             <hr/>
@@ -592,7 +482,7 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://pengcheng.site/2020/05/24/java-bing-fa-bian-cheng-yong-lock-jie-kou-zi-ding-yi-tong-bu-zu-jian/">https://pengcheng.site/2020/05/24/java-bing-fa-bian-cheng-yong-lock-jie-kou-zi-ding-yi-tong-bu-zu-jian/</a>
+                    <a href="https://pengcheng.site/2023/08/26/chong-xin-bu-shu-hexo-bo-ke/">https://pengcheng.site/2023/08/26/chong-xin-bu-shu-hexo-bo-ke/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -630,8 +520,8 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/java-juc-concurrency/">
-                                    <span class="chip bg-color">java,juc,concurrency</span>
+                                <a href="/tags/%E9%9A%8F%E7%AC%94/">
+                                    <span class="chip bg-color">随笔</span>
                                 </a>
                             
                         </div>
@@ -799,7 +689,7 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
         repo: 'blogtalk',
         owner: 'mooba',
         admin: ["mooba"],
-        id: '2020-05-24T13-14-06',
+        id: '2023-08-26T16-40-47',
         distractionFreeMode: false  // Facebook-like distraction free mode
     });
 
@@ -824,33 +714,29 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/08/09/zai-tan-java-zhong-de-si-chong-yin-yong/">
+                <a href="/2023/08/26/chong-xin-kai-shi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="再谈Java中的四种引用">
+                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="重新开始">
                         
-                        <span class="card-title">再谈Java中的四种引用</span>
+                        <span class="card-title">重新开始</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            用实例对Java的四种引用作更详细的介绍
+                            我这个人，热情总是随着时间和外部的刺激此起彼伏。当对一个事情突然有了兴趣，就会茶饭不思的去调研、搜集资料、甚至动手操作一把，然后当去的阶段性的完成之后，这种“完成感”就会让热情迅速消退，刚刚完成的事情有可能好久都不会再碰、再提起，甚至一想到
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-08-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-08-26
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/java/" class="post-category">
-                                    java
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            木白
                             
                         </span>
                     </div>
@@ -858,8 +744,8 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E2%80%94-Java/">
-                        <span class="chip bg-color">— Java</span>
+                    <a href="/tags/%E9%9A%8F%E7%AC%94/">
+                        <span class="chip bg-color">随笔</span>
                     </a>
                     
                 </div>
@@ -873,24 +759,24 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/02/29/ddia-xue-xi-bi-ji-ch1-ke-kuo-zhan-yu-ke-wei-hu-de-ying-yong-xi-tong/">
+                <a href="/2021/05/23/mysql-quan-ju-suo-he-biao-suo/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="DDIA学习笔记">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Mysql:全局锁和表锁">
                         
-                        <span class="card-title">DDIA学习笔记</span>
+                        <span class="card-title">Mysql:全局锁和表锁</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            DDIA第一章的读书笔记
+                            丁奇mysql45讲笔记
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-02-29
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-05-23
                             </span>
                         <span class="publish-author">
                             
@@ -903,8 +789,8 @@ Lock接口在Java SE 5之后并发包中提供了Lock接口来实现同步组件
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">
-                        <span class="chip bg-color">分布式</span>
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
